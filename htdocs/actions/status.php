@@ -22,6 +22,11 @@
 
 require_once("../includes/mysql.config.php");
 
+// add json array of item id's that will be affected by this action to table 'actions'
+$jsonData = $_POST["data"];
+$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '5', '$jsonData')";
+$result = $conn->query($sql);
+
 $obj = json_decode($_POST["data"], false);
 $total_affected = 0;
 

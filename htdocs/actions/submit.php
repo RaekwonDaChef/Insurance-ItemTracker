@@ -24,6 +24,15 @@
 	
 require_once("../includes/mysql.config.php"); // mysql connection
 
+// add json array of item id's that will be affected by this action to table 'actions'
+$items = array();
+$result = $conn->query("SELECT * FROM contents WHERE status='3'");
+while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
+$items = json_encode($items);
+$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '1', '$items')";
+$result = $conn->query($sql);
+
+// change item statuses
 $conn->query("UPDATE contents SET status='4' WHERE status='3'"); // status 3 = replaced | status 4 = submitted
 echo $conn->affected_rows; // return the number or records updated in the table
 

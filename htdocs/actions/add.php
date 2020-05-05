@@ -46,6 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($unit_price < 0 || $lost_depracation_amount < 0 || $acv_paid < 0) {
         die("critical error: money value cannot be less than 0");
     }
+    
+    // add item id in json format to table 'actions'
+    $items = array();
+    array_push($items,$item); }
+    $items = json_encode($items);
+    $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '3', '$items')";
+    $result = $conn->query($sql);
+
     // at this point it is safe to insert row into sql table
     $sql = "INSERT INTO `contents` (`item`, `status`, `description`, `quantity`, `unit_price`, `lost_depracation_amount`, `spend_amount`, `acv_paid`) VALUES ('$item', '1', '$description', '$quantity', '$unit_price', '$lost_depracation_amount', '$spend_amount', '$acv_paid')";
     $result = $conn->query($sql);
