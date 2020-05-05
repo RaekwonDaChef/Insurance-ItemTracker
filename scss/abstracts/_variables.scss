@@ -1,0 +1,35 @@
+/* Fonts */
+$primary-font: 'Russo One', sans-serif;
+$secondary-font: 'techna_sansregular', 'Verdana', 'sans-serif';
+
+/* Icons */
+$icon-font: 'icomoon';
+$icon-sizes: 14px, 16px, 24px, 28px;
+$icons: (
+    "edit": "\e905",
+    "github": "\e903",
+    "check-square-o": "\e901",
+    "search": "\e986",
+    "calculator": "\e904",
+    "fire": "\e9a9"
+);
+
+/* Breakpoints -> acquired directly from bootstrap */
+$breakpoint-mobileDevice: map-get($grid-breakpoints, sm);
+$breakpoint-tablet: map-get($grid-breakpoints, md);
+$breakpoint-largeDevice: map-get($grid-breakpoints, lg);
+
+$breakpoint-hideLowPriority: $breakpoint-tablet;
+
+/* Status Colors */
+$status-notreplaced: #c2baba;
+$status-partial: #ffb395;
+$status-replaced: #d4a000;
+$status-submitted: #f57542;
+$status-finalized: #ea6d3c;
+
+/*
+    Dark Mode (Experimental)
+    Notes: didnt finish fixing table stripe colors, row selected color, and checkbox styles.
+*/
+$enable-darkMode: false;

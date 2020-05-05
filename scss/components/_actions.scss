@@ -1,0 +1,39 @@
+/*
+    Insurance: Item Tracker
+    by Michael Cabot
+*/
+
+form {
+    label {
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+#finalizeReceipts, #submitReceipts, #addItemSaving, #deleteItemsDeleting {
+    display: none;
+}
+
+#addItemErrors, #addItemSuccessMsg, #addItemFailMsg {
+    display: none;
+    margin-top: -5px;
+}
+
+#submitReceipts {
+    margin-top: 0px;
+}
+
+#successMessage, #failMessage {
+    display: none;
+    margin-top: 2px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+
+#searchCaption {
+    display: none;
+    margin-top: 2px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    height: 50px;
+}

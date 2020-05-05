@@ -1,0 +1,178 @@
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+.status-notreplaced { color: $status-notreplaced; }
+.status-partial { color: $status-partial; }
+.status-replaced { color: $status-replaced; }
+.status-submitted { color: $status-submitted; }
+.status-finalized { color: $status-finalized; }
+
+#sortOrderMenuButton {
+    margin-right: 0px;
+    display: none;
+}
+
+#sortOrderByMenuButton {
+    margin-right: -10px;
+    display: none;
+}
+
+@include until(350px) {
+    #sortOrderMenuButton, #sortOrderByMenuButton {
+        margin-right: 0px;
+    }
+}
+
+.selected {
+    background-color: rgba(248,241,186,0.25) !important;
+    border-left: 12px solid #666666 !important;
+}
+
+.loading {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    @media (prefers-color-scheme: dark) {
+        @if $enable-darkMode == true {
+            background: none;
+            background-color: #333333;
+        }
+    }
+	border-top: 4px solid #dbdbdb;
+	border-left: 1px dashed rgba(0,0,0,0.15);
+	border-right: 1px dashed rgba(0,0,0,0.15);
+	border-bottom: 4px solid #dbdbdb;
+    @media (prefers-color-scheme: dark) {
+        @if $enable-darkMode == true {
+            border-top: 5px solid rgba(255,255,255,0.8);
+            border-left: 1px dashed rgba(255,255,255,0.8);
+            border-right: 1px dashed rgba(255,255,255,0.8);
+            border-bottom: 5px solid rgba(255,255,255,0.8);
+        }
+    }
+	border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 1.0em;
+    @media (prefers-color-scheme: dark) {
+        @if $enable-darkMode == true {
+            border-top: 5px solid rgba(255,255,255,0.8);
+            border-left: 1px dashed rgba(255,255,255,0.8);
+            border-right: 1px dashed rgba(255,255,255,0.8);
+            border-bottom: 5px solid rgba(255,255,255,0.8);
+        }
+    }
+    thead {
+        background-color: rgba(255,255,204,1);
+        @media (prefers-color-scheme: dark) {
+            @if $enable-darkMode == true {
+                background-color: rgba(255,255,204,0.75);
+            }
+        }
+    }
+    tr {
+        th {
+            &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6)  {
+                text-align: center;
+            }
+            &:first-child, &:nth-child(7) {
+                text-align: right;
+            }
+        }
+        td {
+            &:first-child { // column: item #
+                text-align: center;
+                color: #1187D0;
+            }
+            &:nth-child(2) { // column: description
+                text-align: left;
+                font-size: 1.1em;
+                @media (prefers-color-scheme: dark) {
+                    @if $enable-darkMode == true {
+                        color: rgba(248,248,255,0.9);
+                    }
+                }
+            }
+            &:nth-child(3) { // column: qty
+                text-align: center;
+                @media (prefers-color-scheme: dark) {
+                    @if $enable-darkMode == true {
+                        color: rgba(248,248,255,0.7);
+                    }
+                }
+                
+            }
+            &:nth-child(4) { // column: price
+                text-align: center;
+                @media (prefers-color-scheme: dark) {
+                    @if $enable-darkMode == true {
+                        color: rgba(248,248,255,0.7);
+                    }
+                }
+            }
+            &:nth-child(5) { // column: $$
+                text-align: center;
+                color: green;
+                font-size: 1.1em;
+            }
+            &:nth-child(6) { // column: spend
+                text-align: center;
+                color: red;
+                font-size: 1.1em;
+            }
+            &:nth-child(7) { // column: status
+                text-align: right;
+                font-size: 1.05em;
+            }
+        }
+    }
+}
+
+@include until($breakpoint-mobileDevice) {
+    table {
+        font-size: 0.85em;
+    }
+}
+
+@include until(410px) {
+    table {
+        font-size: 0.80em;
+    }
+}
+
+@include until(340px) {
+    table {
+        font-size: 0.70em;
+    }
+}
+
+@include until($breakpoint-tablet) {
+    table {
+        margin-top: 10px;
+    }
+}
+
+@include until($breakpoint-mobileDevice) {
+    table {
+        margin-top: 5px;
+    }
+}

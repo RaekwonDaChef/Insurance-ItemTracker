@@ -1,0 +1,91 @@
+/*!
+ * Bootstrap v4.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+$enable-gradients: true;
+
+$theme-colors: (
+    "primary": #222222
+);
+
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+@import "bootstrap/input-group";
+@import "bootstrap/tables";
+@import "bootstrap/grid";
+@import "bootstrap/dropdown";
+@import "bootstrap/nav";
+@import "bootstrap/navbar";
+@import "bootstrap/jumbotron";
+@import "bootstrap/alert";
+@import "bootstrap/reboot";
+@import "bootstrap/root";
+@import "bootstrap/type";
+@import "bootstrap/buttons";
+@import "bootstrap/modal";
+@import "bootstrap/tooltip";
+@import "bootstrap/images";
+@import "bootstrap/code";
+@import "bootstrap/forms";
+@import "bootstrap/transitions";
+@import "bootstrap/button-group";
+@import "bootstrap/custom-forms";
+@import "bootstrap/list-group";
+@import "bootstrap/close";
+@import "bootstrap/toasts";
+@import "bootstrap/popover";
+@import "bootstrap/utilities";
+@import "bootstrap/badge";
+@import "bootstrap/carousel";
+@import "bootstrap/spinners";
+@import "bootstrap/print";
+@import "bootstrap/card";
+@import "bootstrap/breadcrumb";
+@import "bootstrap/pagination";
+@import "bootstrap/progress";
+@import "bootstrap/media";
+
+// ------------------------------
+
+// Customizations for site theme:
+
+.dropdown-item {
+    &:hover, &:focus {
+        color: #333333 !important;
+        background: none !important;
+        background-color: #ffffcc !important;
+        text-shadow: 2px 4px 7px #e3e3da !important;
+    }
+}
+
+.container { padding-top: 20px; }
+
+.navbar-toggler-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.alert {
+    margin-top: 40px;
+}
+
+.btn-warning {
+    margin-right: 10px;
+}
+
+@media (max-width: 358px) {
+    .btn-warning {
+        margin-right: -10px;
+    }
+}
+    
+@media (max-width: 323px) {
+    .btn-warning {
+        margin-right: 10px;
+    }
+}

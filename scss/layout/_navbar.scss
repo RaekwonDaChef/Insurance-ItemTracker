@@ -1,0 +1,60 @@
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+// will set css styles on table nav also, which is ok because table nav does not contain these elements
+// (site uses 2 <nav></nav> sections for both navigation menus)
+nav { 
+    form {
+        padding-right: 10px;
+    }
+    button {
+        margin-right: 5px;
+    }
+}
+
+// site title on nav bar which appears next to logo icon or in center of navbar (if it is collapsed)
+// does not appear on home page or any page with header that already contains the site title
+#navTextTitle {
+    display: none;
+    color: #ffffcc;
+    font-family: $primary-font;
+    margin-right: 15px;
+}
+
+.navbar-site-logo {
+	font-size: 1.05em;
+	color: #ffffcc;
+	text-shadow: 2px 4px 10px #444444;
+}
+
+@include until($breakpoint-tablet) {
+    nav {
+        button, form {
+            margin-right: 0px;
+            padding-right: 0px;
+        }
+    }
+}
+
+@include until($breakpoint-largeDevice) {
+    #navTextTitle {
+        margin-right: 0px;
+    }
+}

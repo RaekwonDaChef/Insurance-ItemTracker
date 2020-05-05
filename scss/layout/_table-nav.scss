@@ -1,0 +1,63 @@
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#tableNav {
+    background: none;
+    @media (prefers-color-scheme: dark) {
+        @if $enable-darkMode == true {
+            background-color: #1D1F20 !important;
+        }
+    }
+    display: none; margin-top: 0px;
+    .active {
+        background-color: rgba(0,0,0,0.1) !important;
+        color: #000000 !important;
+        @media (prefers-color-scheme: dark) {
+            @if $enable-darkMode == true {
+                color: #ffffcc !important;
+            }
+        }
+    }
+}
+
+.nav-tabs {
+    border-bottom: none;
+    li {
+        margin-top: 10px;
+        a {
+            border-radius: 5px !important;
+            color: white;
+            transition: all 0.8s;
+            margin: 0px 2px;
+            background-color: #666666;
+            border-color: #ffffcc !important;
+            &:hover {
+                background-color: #ffffcc !important;
+                color: black !important;
+            }
+        }
+    }
+}
+
+@include until($breakpoint-mobileDevice) {
+    .nav-tabs > li > a {
+        padding-left: 20px !important;
+    }
+}

@@ -1,0 +1,72 @@
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+.check_container {
+    display: block;
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    @include prefix(user-select, none);
+    .checkmark {
+        &:after {
+            left: 9px;
+            top: 5px;
+            @include sizeWH(5px, 10px);
+            border: solid white;
+            //@media (prefers-color-scheme: dark) {
+                //@if $enable-darkMode == true {
+                    //border: solid rgb(220,220,220);
+                //}
+            //}
+            border-width: 0 3px 3px 0;
+            @include prefix(transform, rotate(45deg));
+        }
+    }
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        @include sizeWH(0, 0);
+        &:checked ~ .checkmark {
+            background-color: #666666;
+        }
+        &:checked ~ .checkmark:after {
+            display: block;
+        }
+    }
+    &:hover input ~ .checkmark { 
+        background-color: #666666;
+    }
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include sizeWH(23px, 23px);
+    background-color: #DDDDDD;
+    border-radius: 5px;
+    &:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+}

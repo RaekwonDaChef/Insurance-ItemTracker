@@ -1,0 +1,29 @@
+/*
+    Insurance: Item Tracker
+    by Michael Cabot
+*/
+
+@each $size in $icon-sizes {
+    .icon-#{$size} {
+        font-size: $size;
+    }
+}
+
+@each $name, $glyph in $icons {
+    .icon-#{$name}:before {
+        font-family: $icon-font;
+        content: $glyph;
+        font-style: normal;
+        vertical-align: middle;
+    }
+}
+
+.icon-light {
+	color: #ffffff;
+    opacity: 0.5;
+    transition: all 1s;
+    &:hover {
+        opacity: 0.9;
+        text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
+    }
+}
