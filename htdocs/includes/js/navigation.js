@@ -41,7 +41,8 @@ function navigateTo(linkElement) {
     hideSelected();
 
     $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
-
+    $("#submitReceipts, #finalizeReceipts").hide(); // hide both buttons (Finalize & Submit)
+    
     switch (pageName) {
         case "notreplaced":
             $("#statusDropdown").show().html("Status: Not Replaced");
@@ -52,12 +53,17 @@ function navigateTo(linkElement) {
             $("#statusChangeNotReplaced, #statusChangeReplaced").show();
         break;
         case "replaced":
+            $("#submitReceipts").show();  // show button: "Submit Receipts"
             $("#statusDropdown").show().html("Status: Replaced");
             $("#statusChangeNotReplaced, #statusChangePartial").show();
+        break;
+        case "submitted":
+            $("#finalizeReceipts").show(); // show button: "Finalize Receipts"
         break;
         default:
             $("#statusDropdown").hide();
     }
+    
     
     if (pageName !== 'stats') { // if it is not the stats page, then it is a table page...
         // Top navbar has only 2 text links: Home & View Items dropdown
@@ -71,20 +77,13 @@ function navigateTo(linkElement) {
         $("#sortOrderByMenuButton").show(); // dropdown menu - column sort by seletion
         $("#navTextTitle").show(); /* "Item Tracker" text on top navbar which only appears on
                                                                 pages that do not have header / jumbotron */
-        if (pageName == 'submitted') {
-            $("#submitReceipts").hide();
-            $("#finalizeReceipts").show(); // show button: "Finalize Receipts"
-        } else if (pageName == 'replaced') {
-            $("#finalizeReceipts").hide();
-            $("#submitReceipts").show();  // show button: "Submit Receipts"
-        } else {
-            $("#submitReceipts").hide(); // hide both buttons (Finalize & Submit)
-            $("#finalizeReceipts").hide();
-        }
+
         
         //if ($("[id^='"+containerElement+"']").is(':empty')) { // if that table has not been loaded yet...
+        /*if (pageName == 'submitted') {
+            
+        } else*/ if (pageName !== 'search') {
             // show loading image temporarily while the table loads:
-        if (pageName !== 'search') {
             $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
             $.ajax({
                 url: 'output/tables.php?table='+pageName+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
