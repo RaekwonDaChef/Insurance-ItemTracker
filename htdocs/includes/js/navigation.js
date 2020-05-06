@@ -86,7 +86,7 @@ function navigateTo(linkElement) {
             // show loading image temporarily while the table loads:
             $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
             $.ajax({
-                url: 'output/tables.php?table='+pageName+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
+                url: 'output/table.php?table='+pageName+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
                 type: 'GET',
                 success: function(responseText) {
                     $("[id^='"+containerElement+"']").html(responseText); // load table html
@@ -123,7 +123,7 @@ function reloadTable(table) {
     var searchQueryURL = ""; if (table == "search") { searchQueryURL = "query="+localStorage.searchQuery+"&"; }
 
     $.ajax({
-        url: 'output/tables.php?'+searchQueryURL+'table='+table+
+        url: 'output/table.php?'+searchQueryURL+'table='+table+
         '&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
         type: 'GET',
         success: function(responseText) {
@@ -181,9 +181,9 @@ function ReSortTable(orderBy, order) {
         break;//query=string&
     }
     var searchQueryURL = ""; if (table == "search") { searchQueryURL = "query="+localStorage.searchQuery+"&"; }
-    //alert('output/tables.php?table='+table+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder);
+    //alert('output/table.php?table='+table+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder);
     $.ajax({
-        url: 'output/tables.php?'+searchQueryURL+'table='+table+
+        url: 'output/table.php?'+searchQueryURL+'table='+table+
         '&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
         type: 'GET',
         success: function(responseText) {

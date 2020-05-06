@@ -113,7 +113,7 @@ function showSearchResults(str) {
     $("#container_searchresults").html("<img class=loading src=output/images/tables/loading.gif>");
     // load search results table into the search results page container
     $.ajax({
-        url: 'output/tables.php?table=search&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder+'&query='+str,
+        url: 'output/table.php?table=search&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder+'&query='+str,
         type: 'GET',
         success: function(responseText) {
             $("#searchCaption").show();
