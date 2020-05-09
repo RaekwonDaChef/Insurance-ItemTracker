@@ -49,11 +49,11 @@ if (isset($_GET["page"]) && ($result->num_rows > 1)) {
 
 if (isset($_GET["page"])) { 
     $row = $result->fetch_assoc();
-    echo json_encode($row);
+    echo json_encode($row, JSON_PRETTY_PRINT);
 } else {
     $pages = array();
     while ($row = $result->fetch_assoc()) { $pages[] = $row; }
-    echo json_encode($pages);
+    echo json_encode($pages, JSON_PRETTY_PRINT);
 }
 
 ?>

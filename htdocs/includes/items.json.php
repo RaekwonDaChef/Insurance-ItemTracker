@@ -95,11 +95,11 @@ if (isset($_GET["type"]) && $_GET["type"] == "stats") {
 
     if (isset($_GET["i"])) { 
         $row = $result->fetch_assoc();
-        echo json_encode($row);
+        echo json_encode($row, JSON_PRETTY_PRINT);
     } else {
         $items = array();
         while ($row = $result->fetch_assoc()) { $items[] = $row; }
-        echo json_encode($items);
+        echo json_encode($items, JSON_PRETTY_PRINT);
     }
 }
 
