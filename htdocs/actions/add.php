@@ -51,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $items = array();
     array_push($items,$item); }
     $items = json_encode($items);
-    $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '3', '$items')";
+    $time = time();
+    $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '3', '$items')";
     $result = $conn->query($sql);
 
     // at this point it is safe to insert row into sql table

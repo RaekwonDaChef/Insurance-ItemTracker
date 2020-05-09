@@ -29,7 +29,8 @@ $items = array();
 $result = $conn->query("SELECT * FROM contents WHERE status='4'");
 while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
 $items = json_encode($items);
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '2', '$items')";
+$time = time();
+$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '2', '$items')";
 $result = $conn->query($sql);
 
 $conn->query("UPDATE contents SET status='5' WHERE status='4'"); // status 4 = submitted | status 5 = finalized
