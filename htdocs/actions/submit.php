@@ -28,7 +28,7 @@ require_once("../includes/mysql.config.php"); // mysql connection
 $items = array();
 $result = $conn->query("SELECT * FROM contents WHERE status='3'");
 while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
-$items = json_encode($items);
+$items = implode(", ", $items);
 $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '1', '$items')";
 $result = $conn->query($sql);
 
