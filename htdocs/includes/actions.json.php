@@ -20,22 +20,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// returns page information in json format, retrieved from sql database
+// returns actions information in json format, retrieved from sql database
 
 header('Content-Type: application/json');
 
 require_once("mysql.config.php");
-
-/*
-This was used to  create test submissions during development...
-$items = array();
-$result = $conn->query("SELECT * FROM contents WHERE status='4'");
-while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
-$items = implode(", ", $items);
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES (CURRENT_TIMESTAMP, '1', '$items')";
-$result = $conn->query($sql);
-*/
-
 if (isset($_GET["order"])) { 
     $order = $_GET['order'];
     $order = $conn->real_escape_string($order);
@@ -43,19 +32,22 @@ if (isset($_GET["order"])) {
     $order = "DESC";
 }
 
-if (isset($_GET["submission"])) { 
-    $submission = $_GET['submission'];
-    $submission = $conn->real_escape_string($submission);
-    $sql = "SELECT * FROM actions WHERE timestamp = $submission";
+if (isset($_GET["timestamp"])) { 
+    $timestamp = $conn->real_escape_string($timestamp);
+    $sql = "SELECT * FROM actions WHERE timestamp = $timestamp";
+} elseif (isset($_GET["action"])) { 
+    $action = $_GET['action'];
+    $action = $conn->real_escape_string($action);
+    $sql = "SELECT * FROM actions WHERE actionID = $action";
 } else {
-    $sql = "SELECT * FROM actions WHERE actionID = 1 ORDER BY timestamp $order";
+    $sql = "SELECT * FROM actions ORDER BY timestamp $order";
 }
 
 $result = $conn->query($sql);
 
-if ($result->num_rows < 1) { die("Error: No submissions found!"); }
+if ($result->num_rows < 1) { die("Error: No actions found!"); }
 
-if (isset($_GET["submission"])) { 
+if (isset($_GET["timestamp"])) { 
     $row = $result->fetch_assoc();
     echo stripslashes(json_encode($row, JSON_PRETTY_PRINT));
 } else {
