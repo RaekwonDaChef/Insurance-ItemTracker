@@ -25,6 +25,7 @@
 header('Content-Type: application/json');
 
 require_once("mysql.config.php");
+
 if (isset($_GET["order"])) { 
     $order = $_GET['order'];
     $order = $conn->real_escape_string($order);
@@ -45,7 +46,15 @@ if (isset($_GET["timestamp"])) {
 
 $result = $conn->query($sql);
 
-if ($result->num_rows < 1) { die("Error: No actions found!"); }
+if ($result->num_rows < 1) { 
+    print(json_encode([
+        'success' => false,
+        'errno'   => '1',
+        'error'   => 'no results',
+        'description'   => 'no actions found!',
+    ], JSON_PRETTY_PRINT));
+    die();
+}
 
 if (isset($_GET["timestamp"])) { 
     $row = $result->fetch_assoc();

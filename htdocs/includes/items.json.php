@@ -75,9 +75,14 @@ if (isset($_GET["type"]) && $_GET["type"] == "stats") {
         $i = $_GET["i"];
         // security measures -----------------------------------------------------------
         $i = $conn->real_escape_string($i);
-        if (!ctype_digit($i)) { die("Error: Item number can only contain numbers!"); }
-        if (strlen($i) > 5) { die("Error: Item number cannot exceed 5 digits in length!"); }
-        if (($i) < 1) { die("Error: Item number cannot be lower than 1!"); }
+        if ((!ctype_digit($i)) || (strlen($i) > 5) || (($i) < 1)) {
+            print(json_encode([
+                'success' => false,
+                'errno'   => '3',
+                'error'   => 'invalid item number!',
+            ], JSON_PRETTY_PRINT));
+            die();
+        }
         // -----------------------------------------------------------------------------
         $sql = "SELECT * FROM contents WHERE item = \"" . $i . "\"";
     } else {
@@ -89,7 +94,13 @@ if (isset($_GET["type"]) && $_GET["type"] == "stats") {
     // more error checking ---------------------------------------------------------
     if ($result->num_rows < 1) { die("Error: Item not found!"); }
     if (isset($_GET["i"]) && $result->num_rows > 1) { 
-        die("Error: Item number collision! (Found " . $result->num_rows . " items matching number '" . $i . "')");
+        print(json_encode([
+            'success' => false,
+            'errno'   => '2',
+            'error'   => 'collision',
+            'description'   => 'item number collision! multiple items have the same number',
+        ], JSON_PRETTY_PRINT));
+        die();
     }
     // -----------------------------------------------------------------------------
 

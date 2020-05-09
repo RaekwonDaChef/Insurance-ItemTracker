@@ -41,9 +41,23 @@ if (isset($_GET["page"])) {
 $result = $conn->query($sql); // execute sql query now that it is safe
 
 // more error checking ---------------------------------------------------------
-if ($result->num_rows < 1) { die("Error: Page not found!"); }
+if ($result->num_rows < 1) {
+    print(json_encode([
+        'success' => false,
+        'errno'   => '1',
+        'error'   => 'no page found!',
+    ], JSON_PRETTY_PRINT));
+    die();
+}
+
 if (isset($_GET["page"]) && ($result->num_rows > 1)) { 
-    die("Error: Page name collision! (Found " . $result->num_rows . " pages matching name '" . $page . "')");
+    print(json_encode([
+        'success' => false,
+        'errno'   => '2',
+        'error'   => 'collision',
+        'description'   => 'page name collision! multiple pages have the same name',
+    ], JSON_PRETTY_PRINT));
+    die();
 }
 // -----------------------------------------------------------------------------
 
