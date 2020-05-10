@@ -58,7 +58,7 @@ function navigateTo(linkElement) {
             $("#statusChangeNotReplaced, #statusChangePartial").show();
         break;
         case "submitted":
-            $("#finalizeReceipts").show(); // show button: "Finalize Receipts"
+            //$("#finalizeReceipts").show(); // show button: "Finalize Receipts"
         break;
         default:
             $("#statusDropdown").hide();
@@ -72,17 +72,29 @@ function navigateTo(linkElement) {
         $("#link_stats_li").removeClass("active");
         $("header").slideUp(); // hide the header / jumbotron on table pages
         $(tableNavElement).addClass("active"); // table nav bar, set current link as active
-        $("#tableNav").show();
-        $("#sortOrderMenuButton").show(); // dropdown menu - asc or desc
-        $("#sortOrderByMenuButton").show(); // dropdown menu - column sort by seletion
+        if (pageName !== 'submissions') {
+            $("#tableNav").show();
+            $("#sortOrderMenuButton").show(); // dropdown menu - asc or desc
+            $("#sortOrderByMenuButton").show(); // dropdown menu - column sort by seletion
+        }
         $("#navTextTitle").show(); /* "Item Tracker" text on top navbar which only appears on
                                                                 pages that do not have header / jumbotron */
 
-        
         //if ($("[id^='"+containerElement+"']").is(':empty')) { // if that table has not been loaded yet...
-        /*if (pageName == 'submitted') {
-            
-        } else*/ if (pageName !== 'search') {
+        if (pageName == 'submissions') {
+            // show loading image temporarily while the table loads:
+            $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
+            $.ajax({
+                url: 'output/submissions.php',
+                type: 'GET',
+                success: function(responseText) {
+                    $("[id^='"+containerElement+"']").html(responseText); // load table html
+                },
+                error: function(xhr) {
+                    console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
+                }
+            });
+        } else if (pageName !== 'search') {
             // show loading image temporarily while the table loads:
             $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
             $.ajax({
