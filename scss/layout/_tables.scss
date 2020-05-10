@@ -24,6 +24,16 @@
 .status-submitted { color: $status-submitted; }
 .status-finalized { color: $status-finalized; }
 
+.submission-table {
+    margin-top: -20px;
+}
+
+.submission-header {
+    vertical-align: middle;
+    font-size: 1.15em;
+    margin-top: 10px;
+}
+
 #sortOrderMenuButton {
     margin-right: 0px;
     display: none;

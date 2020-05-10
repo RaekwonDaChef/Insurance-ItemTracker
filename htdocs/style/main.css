@@ -8250,6 +8250,12 @@ html {
   font-style: normal;
   vertical-align: middle; }
 
+.icon-info:before {
+  font-family: "icomoon";
+  content: "";
+  font-style: normal;
+  vertical-align: middle; }
+
 .icon-calculator:before {
   font-family: "icomoon";
   content: "";
@@ -8577,6 +8583,14 @@ nav button {
 
 .status-finalized {
   color: #ea6d3c; }
+
+.submission-table {
+  margin-top: -20px; }
+
+.submission-header {
+  vertical-align: middle;
+  font-size: 1.15em;
+  margin-top: 10px; }
 
 #sortOrderMenuButton {
   margin-right: 0px;
