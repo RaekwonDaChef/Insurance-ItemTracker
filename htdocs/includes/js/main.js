@@ -165,6 +165,7 @@ $(document).ready(function() {
             case "notreplaced": if (data.notreplaced.total > 0) { navigateTo('link_notreplaced'); } break;
             case "replaced": if (data.replaced.total > 0) { navigateTo('link_replaced'); } break;
             case "submitted": if (data.submitted.total > 0) { navigateTo('link_submitted'); } break;
+            case "submissions": if (data.submitted.total > 0) { navigateTo('link_submissions'); } break;
             case "search": navigateTo('link_search'); break;
             default: 
                 $("header").slideDown(); // only show header when not on a table view page
