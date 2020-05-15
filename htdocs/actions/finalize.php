@@ -24,16 +24,24 @@
 
 require_once("../includes/mysql.config.php"); // mysql connection
 
+$timestamp = $_POST["data"];
+
 // add json array of item id's that will be affected by this action to table 'actions'
 $items = array();
-$result = $conn->query("SELECT * FROM contents WHERE status='4'");
-while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
-$items = json_encode($items);
+$result = $conn->query("SELECT * FROM actions WHERE timestamp='$timestamp'") or die("submission not found");
+$row = $result->fetch_assoc();
+$items = $row['data'];
 $time = time();
 $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '2', '$items')";
 $result = $conn->query($sql);
-
-$conn->query("UPDATE contents SET status='5' WHERE status='4'"); // status 4 = submitted | status 5 = finalized
+$items = explode(', ', $row['data']); // seperate comma seperated values into array
+$sqlItems = "";
+foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
+$sqlItems = substr_replace($sqlItems ,"",-3);
+$result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
+$row = $result->fetch_assoc();
+if ($row['status'] != 4) { die(); }
+$conn->query("UPDATE contents SET status='5' WHERE $sqlItems"); // status 4 = submitted | status 5 = finalized
 echo $conn->affected_rows; // return the number or records updated in the table
 
 mysqli_close($conn); // close connection

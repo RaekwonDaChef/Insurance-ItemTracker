@@ -61,7 +61,7 @@ while($row = $result->fetch_assoc()) {
                         <i class="icon-info" style="font-size: 1.3em; margin-right: 5px;"></i> <span class="submission-datetime"><?php echo $datetime; ?></span>
                     </div>
                     <div class="flex-fill">
-                        <button onclick="alert('test')" id="finalizeItems" type="button" class="btn btn-large btn-success bg-gradient-success float-right">
+                        <button onclick="finalizeReceipts('<?php echo $timestamp; ?>')" id="finalizeItems" type="button" class="btn btn-large btn-success bg-gradient-success float-right">
                             <span class="p-2">Finalize</span>
                             <span class="badge badge-light" style="font-size: 0.9em;">$<?php echo $total_value; ?></span>
                         </button>

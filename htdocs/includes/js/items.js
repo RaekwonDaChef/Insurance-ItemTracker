@@ -41,10 +41,11 @@ function submitReceipts() {
     });
 }
 
-function finalizeReceipts() {
+function finalizeReceipts(timestamp) {
     $.ajax({
         url: 'actions/finalize.php',
-        type: 'GET',
+        type: 'POST',
+        data: timestamp,
         success: function(responseText) {
             if (responseText > 0) {
                 reloadTable('finalized');
