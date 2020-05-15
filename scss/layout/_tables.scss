@@ -32,6 +32,11 @@
     vertical-align: middle;
     font-size: 1.15em;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+.submission-datetime {
+    margin-right: 15px;
 }
 
 #sortOrderMenuButton {
@@ -157,13 +162,13 @@ table {
     }
 }
 
-@include until($breakpoint-mobileDevice) {
+@include until($breakpoint-mobileDevice - 10) {
     table {
-        font-size: 0.85em;
+        //font-size: 0.85em;
     }
 }
 
-@include until(410px) {
+@include until(475px) {
     table {
         font-size: 0.80em;
     }

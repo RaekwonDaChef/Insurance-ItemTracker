@@ -36,6 +36,8 @@ body, html {
     }
 }
 
+.priority-none { display: none; }
+
 @include at-least($breakpoint-mobileDevice) {
     .container { padding-top: 10px; }
 }
