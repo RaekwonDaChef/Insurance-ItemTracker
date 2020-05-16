@@ -41,6 +41,15 @@ function submitReceipts() {
     });
 }
 
+function finalizeReceiptsConfirm(timestamp) {
+    $("#processReceiptsTitle").html("Finalize Receipts");
+    $("#processReceiptsTimestamp").html(timestamp);
+    $.getJSON('includes/submission.json.php', { timestamp: timestamp }, function(data) {
+        $("#processReceiptsText").html("Are you sure you want to change "+data.total+" items to status 'finalized'?");
+     });
+    $("#processReceipts").modal();
+}
+
 function finalizeReceipts(timestamp) {
     $.ajax({
         url: 'actions/finalize.php',
@@ -137,7 +146,8 @@ $(document).ready(function() {
         if (modalTitle == "Submit Receipts") {
             submitReceipts();
         } else if (modalTitle == "Finalize Receipts") {
-            finalizeReceipts();
+            var timestamp = $("#processReceiptsTimestamp").html();
+            finalizeReceipts(timestamp);
         }
     });
     $("#addItems, #addItemsWelcome").click(function() {
