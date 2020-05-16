@@ -56,31 +56,31 @@ function loadSiteData(data) {
             .html('Partial ('+data.partial.total+')')
             .removeClass("disabled"); 
     } else {
-        $("#link_partial, #tableNav_partial").addClass("disabled");
+        $("#link_partial, #tableNav_partial").html('Partial').addClass("disabled");
     }
     if (data.finalized.total > 0) {
         $("#link_finalized, #tableNav_finalized")
             .html('Finalized ('+data.finalized.total+')')
             .removeClass("disabled");
     } else {
-        $("#link_finalized, #tableNav_finalized").addClass("disabled");
+        $("#link_finalized, #tableNav_finalized").html('Finalized').addClass("disabled");
     }
     if (data.notreplaced.total > 0) {
         $("#link_notreplaced, #tableNav_notreplaced")
             .html('Not Replaced ('+data.notreplaced.total+')')
             .removeClass("disabled"); 
     } else {
-        $("#link_notreplaced, #tableNav_notreplaced").addClass("disabled");
+        $("#link_notreplaced, #tableNav_notreplaced").html('Not Replaced').addClass("disabled");
     }
     if (data.replaced.total > 0) {
         $("#link_replaced, #tableNav_replaced").html('Replaced ('+data.replaced.total+')').removeClass("disabled");
     } else {
-        $("#link_replaced, #tableNav_replaced").addClass("disabled");
+        $("#link_replaced, #tableNav_replaced").html('Replaced').addClass("disabled");
     }
     if (data.submitted.total > 0) {
         $("#link_submitted, #tableNav_submitted").html('Submitted ('+data.submitted.total+')').removeClass("disabled");
     } else {
-        $("#link_submitted, #tableNav_submitted").addClass("disabled");
+        $("#link_submitted, #tableNav_submitted").html('Submitted').addClass("disabled");
     }
     $("#link_all, #tableNav_all").html('All ('+allItems+')');
 }
