@@ -60,9 +60,6 @@ while($row = $result->fetch_assoc()) {
     $sqlItems = "";
     foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
     $sqlItems = substr_replace($sqlItems ,"",-3);
-    $result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
-    $row = $result->fetch_assoc();
-    if ($row['status'] == 4) { die(); }
     
     $sql = "SELECT SUM(lost_depracation_amount) AS total_value FROM contents WHERE $sqlItems"; // final select submission items query
     $result2 = $conn->query($sql);
