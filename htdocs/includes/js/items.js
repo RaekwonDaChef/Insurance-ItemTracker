@@ -54,7 +54,7 @@ function finalizeReceipts(timestamp) {
     $.ajax({
         url: 'actions/finalize.php',
         type: 'POST',
-        data: timestamp,
+        data: {'timestamp' : timestamp},
         success: function(responseText) {
             if (responseText > 0) {
                 reloadTable('finalized');

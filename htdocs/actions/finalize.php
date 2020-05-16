@@ -24,7 +24,7 @@
 
 require_once("../includes/mysql.config.php"); // mysql connection
 
-$timestamp = $_POST["data"];
+$timestamp = $_POST["timestamp"];
 
 // add json array of item id's that will be affected by this action to table 'actions'
 $items = array();
