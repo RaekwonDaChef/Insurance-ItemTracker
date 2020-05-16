@@ -28,12 +28,15 @@ if (isset($_GET['pending'])) {
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         $items = explode(', ', $row['data']); // seperate comma seperated values into array
-        $sqlItems = "";
-        foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
-        $sqlItems = substr_replace($sqlItems ,"",-3);
-        $result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
-        $row = $result->fetch_assoc();
-        if ($row['status'] == 4) { $pendingSubmissions++; }
+        foreach($items as $item) {
+            $sql = "SELECT * FROM contents WHERE item = $item";
+            $result3 = $conn->query($sql);
+            $row3 = $result3->fetch_assoc();
+            if ($row3['status'] == 4) {
+                $pendingSubmissions++;
+            }
+            break;
+        }
     }
     print(json_encode([
         'pending' => $pendingSubmissions,
@@ -126,7 +129,7 @@ while($row = $result->fetch_assoc()) {
                         <th scope="col">
                             $$
                         </th>
-                        <th class="priority-none" scope="col">
+                        <th class="" scope="col">
                             Spend
                         </th>
                         <th scope="col">
@@ -153,7 +156,7 @@ while($row = $result->fetch_assoc()) {
                         <td class="align-middle priority-none"><?php echo $row2["quantity"]; ?></td>
                         <td class="align-middle priority-none">$<?php echo $unit_price; ?></td>
                         <td class="align-middle">$<?php echo $depracation; ?></td>
-                        <td class="align-middle priority-none">$<?php echo $spend_amount; ?></td>
+                        <td class="align-middle">$<?php echo $spend_amount; ?></td>
                 
 <?php
             
