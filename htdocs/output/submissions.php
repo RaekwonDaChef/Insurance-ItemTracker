@@ -24,9 +24,11 @@ require_once("../includes/mysql.config.php");
 
 if (isset($_GET['pending'])) {
     $pendingSubmissions = 0;
+    $allSubmissions = 0;
     $sql = "SELECT * FROM actions WHERE actionID = '1'";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
+        $allSubmissions++;
         $items = explode(', ', $row['data']); // seperate comma seperated values into array
         foreach($items as $item) {
             $sql = "SELECT * FROM contents WHERE item = $item";
@@ -40,6 +42,7 @@ if (isset($_GET['pending'])) {
     }
     print(json_encode([
         'pending' => $pendingSubmissions,
+        'all' => $allSubmissions,
     ], JSON_PRETTY_PRINT));
     die();
 }
