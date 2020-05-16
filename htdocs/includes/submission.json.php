@@ -26,7 +26,7 @@ header('Content-Type: application/json');
 
 require_once("mysql.config.php");
 
-$timestamp = $_GET["timestamp"];
+if (isset($_GET["timestamp"])) { $timestamp = $_GET["timestamp"]; }
 
 if (!isset($_GET["timestamp"])) { 
     print(json_encode([

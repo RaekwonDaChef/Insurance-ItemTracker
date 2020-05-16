@@ -68,6 +68,14 @@ while($row = $result->fetch_assoc()) {
     
     $sql = "SELECT * FROM contents WHERE $sqlItems ORDER BY lost_depracation_amount DESC"; // final select submission items query
     $result2 = $conn->query($sql);
+    
+    foreach($items as $item) {
+        $sql = "SELECT * FROM contents WHERE item = $item";
+        $result3 = $conn->query($sql);
+        $row3 = $result3->fetch_assoc();
+        $submissionStatus = $row3['status'];
+        break;
+    }
 
 ?>
 
@@ -80,9 +88,13 @@ while($row = $result->fetch_assoc()) {
                         <i class="icon-info" style="font-size: 1.3em; margin-right: 5px;"></i> <span class="submission-datetime"><?php echo $datetime; ?></span>
                     </div>
                     <div class="flex-fill">
-                        <button onclick="finalizeReceiptsConfirm('<?php echo $timestamp; ?>')" id="finalizeItems-<?php echo $timestamp; ?>" type="button" class="btn btn-large btn-success bg-gradient-success float-right">
+                        <button <?php if ($submissionStatus == 4) { ?>onclick="finalizeReceiptsConfirm('<?php echo $timestamp; ?>')"<?php } ?>id="finalizeItems-<?php echo $timestamp; ?>" type="button" class="btn btn-large <?php if ($submissionStatus == 5) { ?>btn-dark bg-gradient-dark<?php } else { ?>btn-success bg-gradient-success<?php } ?> float-right" <?php if ($submissionStatus == 5) { ?>disabled<?php } ?>>
+                            <?php if ($submissionStatus == 4) { ?>
                             <span class="p-2">Finalize</span>
                             <span class="badge badge-light" style="font-size: 0.9em;">$<?php echo $total_value; ?></span>
+                            <?php } else { ?>
+                            <span class="p-2">Finalized</span>
+                            <?php } ?>
                         </button>
                     </div>
                 </div>
