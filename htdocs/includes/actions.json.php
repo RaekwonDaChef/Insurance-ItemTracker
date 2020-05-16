@@ -33,9 +33,8 @@ if (isset($_GET["order"])) {
     $order = "DESC";
 }
 
-$timestamp = $_GET["timestamp"];
-
 if (isset($_GET["timestamp"])) { 
+    $timestamp = $_GET["timestamp"];
     $timestamp = $conn->real_escape_string($timestamp);
     $sql = "SELECT * FROM actions WHERE timestamp = $timestamp";
 } elseif (isset($_GET["action"])) { 
