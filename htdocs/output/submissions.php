@@ -22,6 +22,25 @@
 
 require_once("../includes/mysql.config.php");
 
+if (isset($_GET['pending'])) {
+    $pendingSubmissions = 0;
+    $sql = "SELECT * FROM actions WHERE actionID = '1'";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        $items = explode(', ', $row['data']); // seperate comma seperated values into array
+        $sqlItems = "";
+        foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
+        $sqlItems = substr_replace($sqlItems ,"",-3);
+        $result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
+        $row = $result->fetch_assoc();
+        if ($row['status'] == 4) { $pendingSubmissions++; }
+    }
+    print(json_encode([
+        'pending' => $pendingSubmissions,
+    ], JSON_PRETTY_PRINT));
+    die();
+}
+
 setlocale(LC_MONETARY, 'en_US');
 
 //$timestamp = $_GET['timestamp']; // unix timestamp is unique identifier of submission
@@ -32,7 +51,7 @@ $sql = "SELECT * FROM actions WHERE actionID = '1' ORDER BY timestamp ASC"; // g
 $result = $conn->query($sql);
 if ($result->num_rows < 1) { die("Error: No submissions found!"); } // error: submission not found
 $orderCount = 0;
-    
+
 while($row = $result->fetch_assoc()) {
     
     $timestamp = $row['timestamp'];
@@ -41,6 +60,9 @@ while($row = $result->fetch_assoc()) {
     $sqlItems = "";
     foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
     $sqlItems = substr_replace($sqlItems ,"",-3);
+    $result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
+    $row = $result->fetch_assoc();
+    if ($row['status'] == 4) { die(); }
     
     $sql = "SELECT SUM(lost_depracation_amount) AS total_value FROM contents WHERE $sqlItems"; // final select submission items query
     $result2 = $conn->query($sql);
