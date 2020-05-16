@@ -51,19 +51,20 @@ CREATE TABLE `pages` (
   `pushStateAddr` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `actions` (
+  `timestamp` int(11) NOT NULL,
+  `actionID` tinyint(4) NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`timestamp`),
+  UNIQUE KEY `timestamp_2` (`timestamp`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 --
 -- Dumping data for table `pages`
 --
 
-INSERT INTO `pages` (`page`, `title`, `pushStateAddr`) VALUES
-('all', 'All Items', 'index.html?view=all'),
-('finalized', 'Finalized', 'index.html?view=finalized'),
-('notreplaced', 'Not Replaced', 'index.html?view=notreplaced'),
-('partial', 'Partial', 'index.html?view=partial'),
-('replaced', 'Replaced', 'index.html?view=replaced'),
-('search', 'Search', 'index.html?view=search'),
-('stats', 'Stats', 'index.html'),
-('submitted', 'Submitted', 'index.html?view=submitted');
+INSERT INTO `pages` VALUES ('all','All Items','index.html?view=all'),('finalized','Finalized','index.html?view=finalized'),('notreplaced','Not Replaced','index.html?view=notreplaced'),('partial','Partial','index.html?view=partial'),('replaced','Replaced','index.html?view=replaced'),('search','Search','index.html?view=search'),('stats','Stats','index.html'),('submissions','Submissions','index.html?view=submissions'),('submitted','Submitted','index.html?view=submitted');
 
 --
 -- Indexes for dumped tables
