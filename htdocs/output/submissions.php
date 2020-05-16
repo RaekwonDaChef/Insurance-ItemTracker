@@ -88,9 +88,9 @@ while($row = $result->fetch_assoc()) {
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-auto">
-            <div data-toggle="collapse" data-target="#submission-<?php echo $timestamp; ?>" class="alert alert-secondary bg-gradient-light submission-header">
+            <div class="alert alert-secondary bg-gradient-light submission-header">
                 <div class="d-flex flex-wrap flex-row">
-                    <div class="flex-fill mr-auto">
+                    <div data-toggle="collapse" data-target="#submission-<?php echo $timestamp; ?>" class="flex-fill mr-auto">
                         <i class="icon-info" style="font-size: 1.3em; margin-right: 5px;"></i> <span class="submission-datetime"><?php echo $datetime; ?></span>
                     </div>
                     <div class="flex-fill">
