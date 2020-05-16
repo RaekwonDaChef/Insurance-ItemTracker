@@ -126,6 +126,14 @@ function validateFormData () {
 }
 
 $(document).ready(function() {
+    $.getJSON('output/submissions.php', { pending: "show" }, function(data) {
+        if (data.pending > 0) {
+            $("#submissionCount").html(data.pending);
+        } else {
+            $("#submissionCount").hide();
+        }
+        //if (data.pending)
+    });
     $("#finalizeReceipts").click(function() {
         $("#processReceiptsTitle").html("Finalize Receipts");
         $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {

@@ -43,6 +43,12 @@ $.urlParam = function(name) {
 }
 
 function loadSiteData(data) {
+    $.getJSON('output/submissions.php', { pending: "show" }, function(data) {
+    if (data.pending > 0) {
+        $("#submissionCount").html(data.pending);
+    } else {
+        $("#submissionCount").hide();
+    }
     var allItems = 
         data.partial.total +
         data.finalized.total +
