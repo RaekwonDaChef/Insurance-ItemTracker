@@ -43,7 +43,13 @@ function navigateTo(linkElement) {
     $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
     $("#submitReceipts, #finalizeReceipts").hide(); // hide both buttons (Finalize & Submit)
     
+    $("#link_items_li").addClass("active"); // it is assumed the page will be an item page first because that is most likely case
+    
     switch (pageName) {
+        case "submissions":
+            $("#link_submissions_li").addClass("active");
+            $("#link_stats_li, #link_items_li").removeClass("active");
+        break;
         case "notreplaced":
             $("#statusDropdown").show().html("Status: Not Replaced");
             $("#statusChangePartial, #statusChangeReplaced").show();
@@ -60,16 +66,17 @@ function navigateTo(linkElement) {
         case "submitted":
             //$("#finalizeReceipts").show(); // show button: "Finalize Receipts"
         break;
+        case "stats":
+            $("#link_stats_li").addClass("active");
+            $("#link_submissions_li, #link_items_li").removeClass("active");
+            //$("#finalizeReceipts").show(); // show button: "Finalize Receipts"
+        break;
         default:
             $("#statusDropdown").hide();
     }
     
     
     if (pageName !== 'stats') { // if it is not the stats page, then it is a table page...
-        // Top navbar has only 2 text links: Home & View Items dropdown
-        // one is always active while the other is not:
-        $("#link_items_li").addClass("active");
-        $("#link_stats_li").removeClass("active");
         $("header").slideUp(); // hide the header / jumbotron on table pages
         $(tableNavElement).addClass("active"); // table nav bar, set current link as active
         if (pageName !== 'submissions') {
