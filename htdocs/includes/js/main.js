@@ -64,36 +64,36 @@ function loadSiteData(data) {
     if (data.partial.total > 0) {
         // add item count to navigation link text 
         $("#link_partial, #tableNav_partial")
-            .html('Partial ('+data.partial.total+')')
+            .html('Partial <span class="badge badge-dark ml-1">'+data.partial.total+'</span>')
             .removeClass("disabled"); 
     } else {
         $("#link_partial, #tableNav_partial").html('Partial').addClass("disabled");
     }
     if (data.finalized.total > 0) {
         $("#link_finalized, #tableNav_finalized")
-            .html('Finalized ('+data.finalized.total+')')
+            .html('Finalized <span class="badge badge-dark ml-1">'+data.finalized.total+'</span>')
             .removeClass("disabled");
     } else {
         $("#link_finalized, #tableNav_finalized").html('Finalized').addClass("disabled");
     }
     if (data.notreplaced.total > 0) {
         $("#link_notreplaced, #tableNav_notreplaced")
-            .html('Not Replaced ('+data.notreplaced.total+')')
+            .html('Not Replaced <span class="badge badge-dark ml-1">'+data.notreplaced.total+'</span>')
             .removeClass("disabled"); 
     } else {
         $("#link_notreplaced, #tableNav_notreplaced").html('Not Replaced').addClass("disabled");
     }
     if (data.replaced.total > 0) {
-        $("#link_replaced, #tableNav_replaced").html('Replaced ('+data.replaced.total+')').removeClass("disabled");
+        $("#link_replaced, #tableNav_replaced").html('Replaced <span class="badge badge-dark ml-1">'+data.replaced.total+'</span>').removeClass("disabled");
     } else {
         $("#link_replaced, #tableNav_replaced").html('Replaced').addClass("disabled");
     }
     if (data.submitted.total > 0) {
-        $("#link_submitted, #tableNav_submitted").html('Submitted ('+data.submitted.total+')').removeClass("disabled");
+        $("#link_submitted, #tableNav_submitted").html('Submitted <span class="badge badge-dark ml-1">'+data.submitted.total+'</span>').removeClass("disabled");
     } else {
         $("#link_submitted, #tableNav_submitted").html('Submitted').addClass("disabled");
     }
-    $("#link_all, #tableNav_all").html('All ('+allItems+')');
+    $("#link_all, #tableNav_all").html('All <span class="badge badge-dark ml-1">'+allItems+'</span>');
 }
 
 function showSearchResults(str) {
