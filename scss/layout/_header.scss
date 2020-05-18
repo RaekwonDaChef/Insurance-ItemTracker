@@ -19,6 +19,7 @@
 */
 
 header { // jumbotron header
+    display: none;
     background: linear-gradient(270deg, #ff0000, #fa8000, #fff757);
 	background-size: 600% 600%;
     @include prefix(animation, Pulse 20s ease infinite);
