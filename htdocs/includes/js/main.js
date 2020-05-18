@@ -171,11 +171,11 @@ $(document).ready(function() {
     $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {
         switch ($.urlParam('view')) { // ensure that all links can be accessed via direct url link
             case "all": navigateTo('link_all'); break;
-            case "partial": if (data.partial.total > 0) { navigateTo('link_partial'); } break;
-            case "finalized": if (data.finalized.total > 0) { navigateTo('link_finalized'); } break;
-            case "notreplaced": if (data.notreplaced.total > 0) { navigateTo('link_notreplaced'); } break;
-            case "replaced": if (data.replaced.total > 0) { navigateTo('link_replaced'); } break;
-            case "submitted": if (data.submitted.total > 0) { navigateTo('link_submitted'); } break;
+            case "partial": if (data.partial.total > 0) { navigateTo('link_partial'); } else { navigateTo('link_all'); alert('No partial items!'); = } break;
+            case "finalized": if (data.finalized.total > 0) { navigateTo('link_finalized'); } else { navigateTo('link_all'); alert('No finalized items!'); } break;
+            case "notreplaced": if (data.notreplaced.total > 0) { navigateTo('link_notreplaced'); } else { navigateTo('link_all'); alert('No not replaced items!'); } break;
+            case "replaced": if (data.replaced.total > 0) { navigateTo('link_replaced'); } else { navigateTo('link_all'); alert('No replaced items!'); } break;
+            case "submitted": if (data.submitted.total > 0) { navigateTo('link_submitted'); } else { navigateTo('link_all'); alert('No submitted items!'); } break;
             case "submissions": navigateTo('link_submissions'); break;
             case "search": navigateTo('link_search'); break;
             default: 
