@@ -244,6 +244,7 @@ $(document).ready(function() {
                     $("#failMessage").show();
                     $("#deleteItemsConfirm").modal("hide");
                 }
+                hideSelected();
             },
             error: function(xhr) {
                 console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
