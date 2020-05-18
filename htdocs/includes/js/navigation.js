@@ -42,6 +42,9 @@ function navigateTo(linkElement) {
 
     $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
     $("#submitReceipts, #finalizeReceipts").hide(); // hide both buttons (Finalize & Submit)
+    $("#tableNav").hide();
+    $("#sortOrderMenuButton").hide(); // dropdown menu - asc or desc
+    $("#sortOrderByMenuButton").hide(); // dropdown menu - column sort by seletion
     
     $("#link_items_li").addClass("active"); // it is assumed the page will be an item page first because that is most likely case
     
@@ -86,34 +89,37 @@ function navigateTo(linkElement) {
         }
         $("#navTextTitle").show(); /* "Item Tracker" text on top navbar which only appears on
                                                                 pages that do not have header / jumbotron */
-
-        //if ($("[id^='"+containerElement+"']").is(':empty')) { // if that table has not been loaded yet...
-        if (pageName == 'submissions') {
-            // show loading image temporarily while the table loads:
-            $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
-            $.ajax({
-                url: 'output/submissions.php',
-                type: 'GET',
-                success: function(responseText) {
-                    $("[id^='"+containerElement+"']").html(responseText); // load table html
-                },
-                error: function(xhr) {
-                    console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
-                }
-            });
-        } else if (pageName !== 'search') {
-            // show loading image temporarily while the table loads:
-            $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
-            $.ajax({
-                url: 'output/table.php?table='+pageName+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
-                type: 'GET',
-                success: function(responseText) {
-                    $("[id^='"+containerElement+"']").html(responseText); // load table html
-                },
-                error: function(xhr) {
-                    console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
-                }
-            });
+        
+        //alert($("[id^='"+containerElement+"']").html());
+        
+        if ($("[id^='"+containerElement+"']").is(':empty')) { // if that table has not been loaded yet...
+            if (pageName == 'submissions') {
+                // show loading image temporarily while the table loads:
+                $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
+                $.ajax({
+                    url: 'output/submissions.php',
+                    type: 'GET',
+                    success: function(responseText) {
+                        $("[id^='"+containerElement+"']").html(responseText); // load table html
+                    },
+                    error: function(xhr) {
+                        console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
+                    }
+                });
+            } else if (pageName !== 'search') {
+                // show loading image temporarily while the table loads:
+                $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
+                $.ajax({
+                    url: 'output/table.php?table='+pageName+'&orderby='+localStorage.tableOrderBy+'&order='+localStorage.tableOrder,
+                    type: 'GET',
+                    success: function(responseText) {
+                        $("[id^='"+containerElement+"']").html(responseText); // load table html
+                    },
+                    error: function(xhr) {
+                        console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
+                    }
+                });
+            }
         }
     } else {
         $("header").slideDown();

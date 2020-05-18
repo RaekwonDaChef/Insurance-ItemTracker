@@ -237,7 +237,10 @@ $(document).ready(function() {
     $("#link_finalized, #tableNav_finalized").click(function(event) {
         event.preventDefault(); navigateTo('link_finalized');
     });
-
+    $("#link_submissions").click(function(event) {
+        event.preventDefault(); navigateTo('link_submissions');
+    });
+    
     $('[data-toggle="tooltip"]').tooltip(); // enable tooltips
     
     $('a') // force all external site links to open in a new tab/window
