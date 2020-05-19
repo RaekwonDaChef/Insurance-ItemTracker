@@ -40,6 +40,7 @@ function navigateTo(linkElement) {
     
     hideSelected();
 
+    $(".selected").removeClass("selected");
     $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
     $("#submitReceipts, #finalizeReceipts").hide(); // hide both buttons (Finalize & Submit)
     $("#tableNav").hide();
@@ -107,6 +108,7 @@ function navigateTo(linkElement) {
                     }
                 });
             } else if (pageName !== 'search') {
+                
                 // show loading image temporarily while the table loads:
                 $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
                 $.ajax({
