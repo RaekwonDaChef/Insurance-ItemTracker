@@ -175,17 +175,27 @@ $(document).ready(function() {
         $("#deleteItemsConfirm").modal();
     });
     
-    $(document).on('change', '#selectAll', function() {
-        $("input:checkbox").prop('checked', $(this).prop("checked"));
+    $(document).on('change', '.selectAll', function() { 
         var selCol = 0.00;
         var selSpend = 0.00;
+        var tableName = $(this).closest('table').attr('id');
+        tableName = tableName.slice(6);
+        var checkedTotal = 0;
+        
         if ($(this).is(":checked")) {
             $("#pageContainer").height($(window).height() - 95); // resize window accordingly
             $("footer").fadeIn("slow");
-            $("tr").each(function() {
-                $(this).addClass("selected");
-            });
-            $("input:checked").each(function () {
+            
+            var classString = '.item_row_';
+            classString = classString.concat(tableName);
+            $(classString).each(function() { $(this).addClass("selected"); });
+            
+            var classString = '.item_checkbox_';
+            classString = classString.concat(tableName);
+            
+            $(classString).each(function () {
+                $(this).prop('checked',true);
+                checkedTotal++;
                 var itemNumber = $(this).parent().text().trim();
                 $.getJSON('includes/items.json.php', { i: itemNumber }, function(data) {
                     selCol += parseFloat(data.lost_depracation_amount);
@@ -194,10 +204,15 @@ $(document).ready(function() {
                     $("#selectedSpend").html(selSpend.toFixed(2));
                 });
             });
+            $("#selectedNumber").html(checkedTotal);
         } else {
-            $("tr").each(function() {
-                $(this).removeClass("selected");
+            var classString = '.item_checkbox_';
+            classString = classString.concat(tableName);
+            
+            $(classString).each(function () {
+                $(this).prop('checked',false);
             });
+            $(".selected").removeClass("selected");
             $("#selectedCollect").html("0.00");
             $("#selectedSpend").html("0.00");
             $("footer").fadeOut("slow");
@@ -299,10 +314,18 @@ $(document).ready(function() {
             }
         });
     });
-    $(document).on("change", "input[type='checkbox']", function () { // event when item is selected in table (checkbox)
+    $(document).on("change", ".table_item", function () { // event when item is selected in table (checkbox)
         var itemNumber = $(this).parent().text().trim();
-        var checkedTotal = $("input:checked").length;
-        
+        var tableName = $(this).closest('table').attr('id');
+        tableName = tableName.slice(6);
+        var classString = '.item_checkbox_';
+        var checkedTotal = 0;
+        classString = classString.concat(tableName);
+        $(classString).each(function () {
+             if ($(this).prop("checked") == true) {
+                 checkedTotal++;
+             }
+        });
         if (checkedTotal < 1) { // if no items are selected (user deselected all)
             $("footer").fadeOut("slow"); // hide footer
             $("#pageContainer").height($(window).height() - 50); // resize window accordingly
@@ -323,6 +346,7 @@ $(document).ready(function() {
                 $("#selectedSpend").html(selSpend.toFixed(2));
             });
         } else if ($(this).prop("checked") == false) {
+            $(".selectAll").prop("checked", false);
             $.getJSON('includes/items.json.php', { i: itemNumber }, function(data) {
                 selCol -= parseFloat(data.lost_depracation_amount);
                 selSpend -= parseFloat(data.spend_amount);

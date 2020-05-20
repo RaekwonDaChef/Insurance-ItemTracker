@@ -45,29 +45,32 @@ if (isset($_GET['order']) && ($_GET['order'] == "desc")) {
 }
 
 if (isset($_GET["query"])) { $query = $conn->real_escape_string($_GET["query"]); } // get search query if there is one set
-    if (($_GET['table'] == "search") && (strlen($query)>0)) {
-        $sql = "SELECT * FROM contents WHERE description LIKE '%$query%' AND status <> 5 ORDER BY $order_by $order LIMIT 15";
-    } elseif ($_GET['table'] == "notreplaced") {
-        $sql = "SELECT * FROM contents WHERE status=1 ORDER BY $order_by $order";
-    } elseif ($_GET['table'] == "partial") {
-        $sql = "SELECT * FROM contents WHERE status=2 ORDER BY $order_by $order";
-    } elseif ($_GET['table'] == "replaced") {
-        $sql = "SELECT * FROM contents WHERE status=3 ORDER BY $order_by $order";
-    } elseif ($_GET['table'] == "submitted") {
-        $sql = "SELECT * FROM contents WHERE status=4 ORDER BY $order_by $order";
-    } elseif ($_GET['table'] == "finalized") {
-        $sql = "SELECT * FROM contents WHERE status=5 ORDER BY $order_by $order";
-    } else {
-        $sql = "SELECT * FROM contents ORDER BY $order_by $order";
-    }
+    
+$table = $_GET['table'];
+if (($_GET['table'] == "search") && (strlen($query)>0)) {
+    $sql = "SELECT * FROM contents WHERE description LIKE '%$query%' AND status <> 5 ORDER BY $order_by $order LIMIT 15";
+} elseif ($_GET['table'] == "notreplaced") {
+    $sql = "SELECT * FROM contents WHERE status=1 ORDER BY $order_by $order";
+} elseif ($_GET['table'] == "partial") {
+    $sql = "SELECT * FROM contents WHERE status=2 ORDER BY $order_by $order";
+} elseif ($_GET['table'] == "replaced") {
+    $sql = "SELECT * FROM contents WHERE status=3 ORDER BY $order_by $order";
+} elseif ($_GET['table'] == "submitted") {
+    $sql = "SELECT * FROM contents WHERE status=4 ORDER BY $order_by $order";
+} elseif ($_GET['table'] == "finalized") {
+    $sql = "SELECT * FROM contents WHERE status=5 ORDER BY $order_by $order";
+} else {
+    $sql = "SELECT * FROM contents ORDER BY $order_by $order";
+    $table = "all";
+}
                     
-    $result = $conn->query($sql);
-    $cell_color = 0;
-    if ($result->num_rows > 0) {
+$result = $conn->query($sql);
+$cell_color = 0;
+if ($result->num_rows > 0) {
 ?>
 
 <div class="col-auto">
-    <table class="table table-striped table-responsive">
+    <table id="table_<?php echo $table; ?>" class="table table-striped table-responsive">
         <colgroup>
             <col id="item">
             <col id="description">
@@ -81,7 +84,7 @@ if (isset($_GET["query"])) { $query = $conn->real_escape_string($_GET["query"]);
             <tr>
                 <th scope="col">
                     <label class="check_container"> Item
-                        <input id="selectAll" type="checkbox">
+                        <input class="selectAll" type="checkbox">
                         <span class="checkmark"></span>
                     </label>
                 </th>
@@ -117,10 +120,10 @@ if (isset($_GET["query"])) { $query = $conn->real_escape_string($_GET["query"]);
                     $depracation = number_format($row["lost_depracation_amount"],2);
                     $spend_amount = number_format($row2['SUM(acv_paid + lost_depracation_amount)'],2);
             ?>
-            <tr>
+            <tr class="item_row_<?php echo $table; ?>">
                 <td class="align-middle">
                     <label class="check_container"><?php echo $row["item"]; ?>
-                        <input type="checkbox">
+                        <input class="table_item item_checkbox_<?php echo $table; ?>" type="checkbox">
                         <span class="checkmark"></span>
                     </label>
                 </td>
