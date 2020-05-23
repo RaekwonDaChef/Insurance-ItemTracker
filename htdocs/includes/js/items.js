@@ -104,7 +104,7 @@ function validateFormData () {
     } else if (parseInt($("#addInputQty").val()) < 0){
         $("#addItemsErrorList").append('<li class="list-group-item">Quantity must be greater than 0.</li>');
     }
-    if (isNaN(parseFloat($("#addInputUnitPrice").val()))) {
+    if (isNaN(parseFloat($("#addInputunit_price").val()))) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Unit price is not a valid number.</li>');
     } else if (parseInt($("#addInputQty").val()) < 0){
@@ -198,7 +198,7 @@ $(document).ready(function() {
                 checkedTotal++;
                 var itemNumber = $(this).parent().text().trim();
                 $.getJSON('includes/items.json.php', { i: itemNumber }, function(data) {
-                    selCol += parseFloat(data.lost_depracation_amount);
+                    selCol += parseFloat(data.collect_amount);
                     selSpend += parseFloat(data.spend_amount);
                     $("#selectedCollect").html(selCol.toFixed(2));
                     $("#selectedSpend").html(selSpend.toFixed(2));
@@ -340,7 +340,7 @@ $(document).ready(function() {
 
         if ($(this).prop("checked") == true) {
             $.getJSON('includes/items.json.php', { i: itemNumber }, function(data) {
-                selCol += parseFloat(data.lost_depracation_amount);
+                selCol += parseFloat(data.collect_amount);
                 selSpend += parseFloat(data.spend_amount);
                 $("#selectedCollect").html(selCol.toFixed(2));
                 $("#selectedSpend").html(selSpend.toFixed(2));
@@ -348,7 +348,7 @@ $(document).ready(function() {
         } else if ($(this).prop("checked") == false) {
             $(".selectAll").prop("checked", false);
             $.getJSON('includes/items.json.php', { i: itemNumber }, function(data) {
-                selCol -= parseFloat(data.lost_depracation_amount);
+                selCol -= parseFloat(data.collect_amount);
                 selSpend -= parseFloat(data.spend_amount);
                 $("#selectedCollect").html(selCol.toFixed(2));
                 $("#selectedSpend").html(selSpend.toFixed(2));

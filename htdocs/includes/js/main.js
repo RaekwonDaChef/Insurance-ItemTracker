@@ -19,8 +19,8 @@
 */
 
 var tableSortOrders = [ // all possible table sort orders (columns)
-    {name: "description"},{name: "unitprice"},{name: "spendamount"},{name: "status"},
-    {name: "collectamount"},{name: "qty"},{name: "item"}
+    {name: "description"},{name: "unit_price"},{name: "spend_amount"},{name: "status"},
+    {name: "collect_amount"},{name: "quantity"},{name: "item"}
 ];
 
 if (!tableSortOrders.some(tableOrder => tableOrder.name === localStorage.tableOrderBy)) {
@@ -201,10 +201,10 @@ $(document).ready(function() {
     
     switch (localStorage.tableOrderBy) {
         case "description": $("#sortOrderByMenuButton").html("Sort By: Description"); break;
-        case "unitprice": $("#sortOrderByMenuButton").html("Sort By: Price"); break;
-        case "spendamount": $("#sortOrderByMenuButton").html("Sort By: Spend"); break;
-        case "collectamount": $("#sortOrderByMenuButton").html("Sort By: $$"); break;
-        case "qty": $("#sortOrderByMenuButton").html("Sort By: Quantity"); break;
+        case "unit_price": $("#sortOrderByMenuButton").html("Sort By: Price"); break;
+        case "spend_amount": $("#sortOrderByMenuButton").html("Sort By: Spend"); break;
+        case "collect_amount": $("#sortOrderByMenuButton").html("Sort By: $$"); break;
+        case "quantity": $("#sortOrderByMenuButton").html("Sort By: Quantity"); break;
         case "item": $("#sortOrderByMenuButton").html("Sort By: Item #"); break;
         case "status": $("#sortOrderByMenuButton").html("Sort By: Status"); break;
     }

@@ -155,10 +155,10 @@
                     <div class="dropdown-menu" aria-labelledby="sortOrderByMenuButton">
                         <a onclick="ReSortTable('item', '')" class="dropdown-item" href="#">Item #</a>
                         <a onclick="ReSortTable('description', '')" class="dropdown-item" href="#">Description</a>
-                        <a onclick="ReSortTable('qty', '')" class="dropdown-item" href="#">Quantity</a>
-                        <a onclick="ReSortTable('unitprice', '')" class="dropdown-item" href="#">Price</a>
-                        <a onclick="ReSortTable('collectamount', '')" class="dropdown-item" href="#">$$</a>
-                        <a onclick="ReSortTable('spendamount', '')" class="dropdown-item" href="#">Spend</a>
+                        <a onclick="ReSortTable('quantity', '')" class="dropdown-item" href="#">Quantity</a>
+                        <a onclick="ReSortTable('unit_price', '')" class="dropdown-item" href="#">Price</a>
+                        <a onclick="ReSortTable('collect_amount', '')" class="dropdown-item" href="#">$$</a>
+                        <a onclick="ReSortTable('spend_amount', '')" class="dropdown-item" href="#">Spend</a>
                         <a onclick="ReSortTable('status', '')" class="dropdown-item" href="#">Status</a>
                     </div>
                 </div>
@@ -288,16 +288,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="unit_price">Unit Price</label>
-                                <input name="unit_price" type="number" class="form-control" id="addInputUnitPrice" placeholder="Unit Price...">
+                                <input name="unit_price" type="number" class="form-control" id="addInputunit_price" placeholder="Unit Price...">
                                 <small class="form-text text-muted">
                                     Money amounts should not include a $ sign.
                                 </small>
                             </div>
                             <div class="form-group">
-                                <label for="lost_depracation_amount">
+                                <label for="collect_amount">
                                     Lost Value (Depracation)
                                 </label>
-                                <input name="lost_depracation_amount" type="number" class="form-control" id="addInputRCV" placeholder="Enter RCV...">
+                                <input name="collect_amount" type="number" class="form-control" id="addInputRCV" placeholder="Enter RCV...">
                             </div>
                             <div class="form-group">
                                 <label for="acv_paid">

@@ -38,6 +38,6 @@ foreach($obj as $value) {
 
 echo $total_affected; // return the number or records updated in the table
 
-mysqli_close($conn);
+$conn->close();
 
 ?>

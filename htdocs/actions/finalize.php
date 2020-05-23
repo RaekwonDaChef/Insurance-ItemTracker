@@ -44,6 +44,6 @@ if ($row['status'] != 4) { die(); }
 $conn->query("UPDATE contents SET status='5' WHERE $sqlItems"); // status 4 = submitted | status 5 = finalized
 echo $conn->affected_rows; // return the number or records updated in the table
 
-mysqli_close($conn); // close connection
+$conn->close(); // close connection
 
 ?>

@@ -37,6 +37,6 @@ $result = $conn->query($sql);
 $conn->query("UPDATE contents SET status='4' WHERE status='3'"); // status 3 = replaced | status 4 = submitted
 echo $conn->affected_rows; // return the number or records updated in the table
 
-mysqli_close($conn); // close connection
+$conn->close(); // close connection
 
 ?>

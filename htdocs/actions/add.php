@@ -27,14 +27,14 @@ $item = number_format($_POST["item"], 0, '.', '');
 $description = $_POST["description"];
 $quantity = number_format($_POST["quantity"], 0, '.', '');
 $unit_price = number_format($_POST["unit_price"], 2, '.', '');
-$lost_depracation_amount = number_format($_POST["lost_depracation_amount"], 2, '.', '');
+$collect_amount = number_format($_POST["collect_amount"], 2, '.', '');
 $acv_paid = number_format($_POST["acv_paid"], 2, '.', '');
-$spend_amount = $lost_depracation_amount + $acv_paid;
+$spend_amount = $collect_amount + $acv_paid;
 $spend_amount = number_format($spend_amount, 2, '.', '');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["item"]) || empty($_POST["description"]) || empty($_POST["quantity"]) ||
-        empty($_POST["unit_price"]) || empty($_POST["lost_depracation_amount"]) || empty($_POST["acv_paid"])) {
+        empty($_POST["unit_price"]) || empty($_POST["collect_amount"]) || empty($_POST["acv_paid"])) {
         die("critical error: empty fields");
     }
     if ($item < 1) { die("critical error: item number cannot be less than 1"); }
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = stripslashes($description);
     $description = htmlspecialchars($description);
     if ($quantity < 1) { die("critical error: quantity number cannot be less than 1"); }
-    if ($unit_price < 0 || $lost_depracation_amount < 0 || $acv_paid < 0) {
+    if ($unit_price < 0 || $collect_amount < 0 || $acv_paid < 0) {
         die("critical error: money value cannot be less than 0");
     }
     
@@ -56,12 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     // at this point it is safe to insert row into sql table
-    $sql = "INSERT INTO `contents` (`item`, `status`, `description`, `quantity`, `unit_price`, `lost_depracation_amount`, `spend_amount`, `acv_paid`) VALUES ('$item', '1', '$description', '$quantity', '$unit_price', '$lost_depracation_amount', '$spend_amount', '$acv_paid')";
+    $sql = "INSERT INTO `contents` (`item`, `status`, `description`, `quantity`, `unit_price`, `collect_amount`, `spend_amount`, `acv_paid`) VALUES ('$item', '1', '$description', '$quantity', '$unit_price', '$collect_amount', '$spend_amount', '$acv_paid')";
     $result = $conn->query($sql);
     echo $conn->affected_rows; // return the number or records added to the table
     //echo $conn->error;
 }
 
-mysqli_close($conn); // close connection
+$conn->close(); // close connection
 
 ?>

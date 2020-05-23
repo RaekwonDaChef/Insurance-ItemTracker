@@ -43,23 +43,23 @@ if ($result->num_rows > 0) {
         switch ($row['status']) {
             case 1: // status: not replaced
                 $items['notreplaced']['total']++;
-				$items['notreplaced']['money'] += $row['lost_depracation_amount'];
+				$items['notreplaced']['money'] += $row['collect_amount'];
 				break;
             case 2: // status: partial
 				$items['partial']['total']++;
-				$items['partial']['money'] += $row['lost_depracation_amount'];
+				$items['partial']['money'] += $row['collect_amount'];
 				break;
             case 3: // status: replaced
 				$items['replaced']['total']++;
-				$items['replaced']['money'] += $row['lost_depracation_amount'];
+				$items['replaced']['money'] += $row['collect_amount'];
 				break;
             case 4: // status: receipt submitted
 				$items['submitted']['total']++;
-				$items['submitted']['money'] += $row['lost_depracation_amount'];
+				$items['submitted']['money'] += $row['collect_amount'];
 				break;
             case 5: // status: receipt finalized
 				$items['finalized']['total']++;
-				$items['finalized']['money'] += $row['lost_depracation_amount'];
+				$items['finalized']['money'] += $row['collect_amount'];
 				break;
             }
         }

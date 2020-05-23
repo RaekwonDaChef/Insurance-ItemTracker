@@ -22,7 +22,12 @@
 
 require_once("../includes/mysql.config.php");
 
-if (isset($_GET['pending'])) {
+if (isset($_GET['pending'])) { // if ?pending is set in URL ($_GET['pending'])...
+    /*
+        this is used to quickly output both the number of pending
+        submissions, and number of all submissions, in json format
+        whenever needed.
+    */
     $pendingSubmissions = 0;
     $allSubmissions = 0;
     $sql = "SELECT * FROM actions WHERE actionID = '1'";
@@ -49,17 +54,12 @@ if (isset($_GET['pending'])) {
 
 setlocale(LC_MONETARY, 'en_US');
 
-//$timestamp = $_GET['timestamp']; // unix timestamp is unique identifier of submission
-//$timestamp = $conn->real_escape_string($timestamp); // secure data
-
-//$sql = "SELECT * FROM actions WHERE timestamp = '$timestamp'"; // get submission from actions table
 $sql = "SELECT * FROM actions WHERE actionID = '1' ORDER BY timestamp ASC"; // get submission from actions table (oldest first)
 $result = $conn->query($sql);
 if ($result->num_rows < 1) { die("Error: No submissions found!"); } // error: submission not found
 $orderCount = 0;
 
 while($row = $result->fetch_assoc()) {
-    
     $timestamp = $row['timestamp'];
     $datetime = date("l jS \of F Y h:i:s A", $timestamp);
     $items = explode(', ', $row['data']); // seperate comma seperated values into array
@@ -67,15 +67,22 @@ while($row = $result->fetch_assoc()) {
     foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
     $sqlItems = substr_replace($sqlItems ,"",-3);
     
-    $sql = "SELECT SUM(lost_depracation_amount) AS total_value FROM contents WHERE $sqlItems"; // final select submission items query
+    $sql = "SELECT SUM(collect_amount) AS total_value FROM contents WHERE $sqlItems"; // selet the collect amount total of all items in the submission
     $result2 = $conn->query($sql);
     $row2 = $result2->fetch_assoc();
     $total_value = number_format($row2['total_value'],2);
     
-    $sql = "SELECT * FROM contents WHERE $sqlItems ORDER BY lost_depracation_amount DESC"; // final select submission items query
+    $sql = "SELECT * FROM contents WHERE $sqlItems ORDER BY collect_amount DESC"; // final select submission items query
     $result2 = $conn->query($sql);
     
-    foreach($items as $item) {
+    foreach($items as $item) { // loop that only iterates once
+        /*
+            take the status of the first item in the array of submissions
+            and use it to assume the status of all items and the status
+            of the entire submission.
+            If one item in the submission was a different status than the
+            others, then that would be a problem.
+        */
         $sql = "SELECT * FROM contents WHERE item = $item";
         $result3 = $conn->query($sql);
         $row3 = $result3->fetch_assoc();
@@ -109,8 +116,8 @@ while($row = $result->fetch_assoc()) {
                 <colgroup>
                     <col id="item">
                     <col id="description">
-                    <col id="qty">
-                    <col id="unitprice">
+                    <col id="quantity">
+                    <col id="unit_price">
                     <col id="moneytocollect">
                     <col id="needtospend">
                     <col id="status">
@@ -147,7 +154,7 @@ while($row = $result->fetch_assoc()) {
     while($row2 = $result2->fetch_assoc()) {
         $itemid = $row2['item'];
         $unit_price = number_format($row2["unit_price"],2);
-        $depracation = number_format($row2["lost_depracation_amount"],2);
+        $depracation = number_format($row2["collect_amount"],2);
         $spend_amount = number_format($row2['spend_amount'],2);
     
 ?>
@@ -198,6 +205,6 @@ while($row = $result->fetch_assoc()) {
 
 <?php
 
-mysqli_close($conn);
+$conn->close();
 
 ?>

@@ -182,21 +182,21 @@ function ReSortTable(orderBy, order) {
             $("#sortOrderByMenuButton").html("Sort By: Description");
             localStorage.tableOrderBy = "description";
         break;
-        case "unitprice":
+        case "unit_price":
             $("#sortOrderByMenuButton").html("Sort By: Price");
-            localStorage.tableOrderBy = "unitprice";
+            localStorage.tableOrderBy = "unit_price";
         break;
-        case "spendamount":
+        case "spend_amount":
             $("#sortOrderByMenuButton").html("Sort By: Spend");
-            localStorage.tableOrderBy = "spendamount";
+            localStorage.tableOrderBy = "spend_amount";
         break;
-        case "collectamount":
+        case "collect_amount":
             $("#sortOrderByMenuButton").html("Sort By: $$");
-            localStorage.tableOrderBy = "collectamount";
+            localStorage.tableOrderBy = "collect_amount";
         break;
-        case "qty":
+        case "quantity":
             $("#sortOrderByMenuButton").html("Sort By: Quantity");
-            localStorage.tableOrderBy = "qty";
+            localStorage.tableOrderBy = "quantity";
         break;
         case "item":
             $("#sortOrderByMenuButton").html("Sort By: Item #");

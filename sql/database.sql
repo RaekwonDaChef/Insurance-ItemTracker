@@ -1,32 +1,27 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 26, 2020 at 04:45 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.11
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `insurance_test`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contents`
---
 
 CREATE TABLE `contents` (
   `item` int(11) NOT NULL,
@@ -34,16 +29,10 @@ CREATE TABLE `contents` (
   `description` varchar(200) NOT NULL,
   `quantity` tinyint(4) NOT NULL DEFAULT '1',
   `unit_price` decimal(7,2) NOT NULL DEFAULT '0.00',
-  `lost_depracation_amount` decimal(7,2) NOT NULL DEFAULT '0.00',
+  `collect_amount` decimal(7,2) NOT NULL DEFAULT '0.00',
   `spend_amount` decimal(7,2) NOT NULL DEFAULT '0.00',
   `acv_paid` decimal(7,2) NOT NULL DEFAULT '0.00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pages`
---
 
 CREATE TABLE `pages` (
   `page` varchar(32) NOT NULL,
@@ -59,32 +48,15 @@ CREATE TABLE `actions` (
   UNIQUE KEY `timestamp_2` (`timestamp`),
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
---
--- Dumping data for table `pages`
---
 
 INSERT INTO `pages` VALUES ('all','All Items','index.html?view=all'),('finalized','Finalized','index.html?view=finalized'),('notreplaced','Not Replaced','index.html?view=notreplaced'),('partial','Partial','index.html?view=partial'),('replaced','Replaced','index.html?view=replaced'),('search','Search','index.html?view=search'),('stats','Stats','index.html'),('submissions','Submissions','index.html?view=submissions'),('submitted','Submitted','index.html?view=submitted');
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `contents`
---
 ALTER TABLE `contents`
   ADD PRIMARY KEY (`item`),
   ADD UNIQUE KEY `item` (`item`);
 
---
--- Indexes for table `pages`
---
 ALTER TABLE `pages`
   ADD PRIMARY KEY (`page`),
   ADD UNIQUE KEY `page` (`page`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
