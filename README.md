@@ -1,6 +1,7 @@
 # Insurance-ItemTracker
 
 > **Author:** Michael Cabot (`contact@michaelcabot.dev`)
+> **License:** GPL v3.0 `See LICENSE.md.`
 
 This is a web app that I had created for personal use, to deal with a fire insurance claim related to an unfortunate fire at my residence. Was used to manage the non-restorable list of contents from within the residence, and the collection of money (replacement cost), to handle receipt submissions to the insurance company.
 
