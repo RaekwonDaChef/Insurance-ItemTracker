@@ -117,12 +117,12 @@ if ($result->num_rows > 0) {
                 setlocale(LC_MONETARY, 'en_US');
                 while($row = $result->fetch_assoc()) {
                     $itemid = $row['item'];
-                    $sql2 = "SELECT SUM(acv_paid + collect_amount) FROM contents WHERE item ='" . $row["item"] . "'";
-                    $result2 = $conn->query($sql2);
-                    $row2 = $result2->fetch_assoc();
+                    //$sql2 = "SELECT SUM(acv_paid + collect_amount) FROM contents WHERE item ='" . $row["item"] . "'";
+                    //$result2 = $conn->query($sql2);
+                    //$row2 = $result2->fetch_assoc();
                     $unit_price = number_format($row["unit_price"],2);
                     $depracation = number_format($row["collect_amount"],2);
-                    $spend_amount = number_format($row2['SUM(acv_paid + collect_amount)'],2);
+                    $spend_amount = number_format($row['spend_amount'],2);
             ?>
             <tr class="item_row_<?php echo $table; ?>">
                 <td class="align-middle">
