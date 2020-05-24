@@ -190,8 +190,12 @@ $(document).ready(function() {
         loadSiteData(data);
     });
     
-    $("#searchBox").keyup(function() {
-        showSearchResults($(this).val());
+    $('#searchBox').bind('keypress keydown keyup', function(event) {
+        if (event.keyCode == 13) { 
+            event.preventDefault();
+        } else {
+            showSearchResults($(this).val());
+        }
     });
     
     switch (localStorage.tableOrder) {
