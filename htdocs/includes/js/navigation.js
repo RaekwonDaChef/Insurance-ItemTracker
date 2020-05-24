@@ -44,10 +44,9 @@ function navigateTo(linkElement, doPushState = true) {
     var tableItemCount;
     
     // search box should be empty, if user is navigating between pages
-    if (linkElement != "link_search") { $('#searchBox').val(''); }
+    if (linkElement != "link_search") { $('#searchBox').val(''); $("#searchCaption").hide(); }
     // if a success message is shown, it should be hidden/cleared, if user is navigating between pages
     $("#successMessage").hide();
-    $("#searchCaption").hide();
     $("nav").find(".active").removeClass("active"); // remove active class from any nav element
     
     $.getJSON('includes/pages.json.php', { page: pageName }, function(data) { // get page info (json)
