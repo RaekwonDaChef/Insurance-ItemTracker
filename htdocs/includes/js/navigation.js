@@ -18,7 +18,26 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-function navigateTo(linkElement) {
+$(window).bind('popstate',  
+    function(event) {
+        //console.log(window.location);
+        //should be able to do a switch on the urlParam here
+        switch ($.urlParam('view')) { // ensure that all links can be accessed via direct url link
+            case "all": navigateTo('link_all', false); break;
+            case "partial": navigateTo('link_partial', false); break;
+            case "finalized": navigateTo('link_finalized', false); break;
+            case "notreplaced": navigateTo('link_notreplaced', false); break;
+            case "replaced": navigateTo('link_replaced', false); break;
+            case "submitted": navigateTo('link_submitted', false); break;
+            case "submissions": navigateTo('link_submissions', false); break;
+            case "search": navigateTo('link_search', false); break;
+            default:
+                navigateTo('link_stats', false); break;
+        }
+    }
+);
+
+function navigateTo(linkElement, doPushState = true) {
     var pageName = linkElement.slice(5); // remove 'link_' from linkElement
     var containerElement = 'container_'+pageName;
     var tableElement = 'table_'+pageName;
@@ -35,7 +54,7 @@ function navigateTo(linkElement) {
     $.getJSON('includes/pages.json.php', { page: pageName }, function(data) { // get page info (json)
         tableTitle = data.title; // store page title in a variable for use outside of this scope
         document.title = "Item Tracker (" + data.title + ")"; // set page title
-        history.pushState(null, null, data.pushStateAddr); // change address bar url address
+        if (doPushState === true) { history.pushState(null, null, data.pushStateAddr); } // change address bar url address
     });
     
     hideSelected();
