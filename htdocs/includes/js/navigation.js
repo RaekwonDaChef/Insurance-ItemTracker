@@ -20,9 +20,7 @@
 
 $(window).bind('popstate',  
     function(event) {
-        //console.log(window.location);
-        //should be able to do a switch on the urlParam here
-        switch ($.urlParam('view')) { // ensure that all links can be accessed via direct url link
+        switch ($.urlParam('view')) {
             case "all": navigateTo('link_all', false); break;
             case "partial": navigateTo('link_partial', false); break;
             case "finalized": navigateTo('link_finalized', false); break;
