@@ -83,7 +83,7 @@ function hideSelected() {
     $(":checkbox").prop("checked", false);
 }
 
-function validateFormData () {
+function validateFormData() {
     var addItemNumber = parseInt($("#addInputItem").val());
     var errorsFound = 0;
     if (!Number.isInteger(addItemNumber)) {
@@ -181,16 +181,17 @@ $(document).ready(function() {
         var tableName = $(this).closest('table').attr('id');
         tableName = tableName.slice(6);
         var checkedTotal = 0;
+        var classString = '';
         
         if ($(this).is(":checked")) {
             $("#pageContainer").height($(window).height() - 95); // resize window accordingly
             $("footer").fadeIn("slow");
             
-            var classString = '.item_row_';
+            classString = '.item_row_';
             classString = classString.concat(tableName);
             $(classString).each(function() { $(this).addClass("selected"); });
             
-            var classString = '.item_checkbox_';
+            classString = '.item_checkbox_';
             classString = classString.concat(tableName);
             
             $(classString).each(function () {
@@ -206,7 +207,7 @@ $(document).ready(function() {
             });
             $("#selectedNumber").html(checkedTotal);
         } else {
-            var classString = '.item_checkbox_';
+            classString = '.item_checkbox_';
             classString = classString.concat(tableName);
             
             $(classString).each(function () {
