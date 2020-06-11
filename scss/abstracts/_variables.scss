@@ -3,7 +3,7 @@ $primary-font: 'Russo One', sans-serif;
 $secondary-font: 'techna_sansregular', 'Verdana', 'sans-serif';
 
 /* Icons */
-$icon-font: 'icomoon';
+$icon-font: 'itemtracker';
 $icon-sizes: 14px, 16px, 24px, 28px;
 $icons: (
     "edit": "\e905",
@@ -12,7 +12,7 @@ $icons: (
     "search": "\e986",
     "info": "\e900",
     "calculator": "\e904",
-    "fire": "\e9a9"
+    "fire": "\66"
 );
 
 /* Breakpoints -> acquired directly from bootstrap */
