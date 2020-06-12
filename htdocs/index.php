@@ -29,7 +29,7 @@
 <body>
     <!-- main top nav bar -->
     <nav class="navbar bg-gradient-dark fixed-top navbar-expand-lg navbar-dark">
-        <a id="link_logo" class="navbar-brand" href="index.html">
+        <a id="link_logo" class="navbar-brand" href="index.php">
             <i class="icon-fire navbar-site-logo"></i>
         </a>
         <span id="navTextTitle">Item Tracker</span>
@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse navbar-custom" id="navbarContent">
             <ul class="navbar-nav mr-auto">
                 <li id="link_stats_li" class="nav-item active">
-                    <a id="link_stats" class="nav-link" href="index.html">
+                    <a id="link_stats" class="nav-link" href="index.php">
                         Home <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -48,17 +48,17 @@
                         View Items
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a id="link_notreplaced" class="dropdown-item" href="index.html?view=notreplaced">Not Replaced</a>
-                        <a id="link_partial" class="dropdown-item" href="index.html?view=partial">Partial</a>
-                        <a id="link_replaced" class="dropdown-item" href="index.html?view=replaced">Replaced</a>
-                        <a id="link_submitted" class="dropdown-item" href="index.html?view=submitted">Submitted</a>
-                        <a id="link_finalized" class="dropdown-item" href="index.html?view=finalized">Finalized</a>
+                        <a id="link_notreplaced" class="dropdown-item" href="index.php?view=notreplaced">Not Replaced</a>
+                        <a id="link_partial" class="dropdown-item" href="index.php?view=partial">Partial</a>
+                        <a id="link_replaced" class="dropdown-item" href="index.php?view=replaced">Replaced</a>
+                        <a id="link_submitted" class="dropdown-item" href="index.php?view=submitted">Submitted</a>
+                        <a id="link_finalized" class="dropdown-item" href="index.php?view=finalized">Finalized</a>
                         <div class="dropdown-divider"></div>
-                        <a id="link_all" class="dropdown-item" href="index.html?view=all">All Items</a>
+                        <a id="link_all" class="dropdown-item" href="index.php?view=all">All Items</a>
                     </div>
                 </li>
                 <li id="link_submissions_li" class="nav-item">
-                    <a id="link_submissions" class="nav-link" href="index.html?view=submissions">
+                    <a id="link_submissions" class="nav-link" href="index.php?view=submissions">
                         Submissions <span class="badge badge-light ml-1" id="submissionCount"></span>
                     </a>
                 </li>
@@ -125,22 +125,22 @@
         <nav id="tableNav" class="navbar navbar-expand-sm bg-light justify-content-center">
             <ul class="nav nav-tabs navbar-nav">
                 <li class="nav-item">
-                    <a id="tableNav_notreplaced" class="nav-link" href="index.html?view=notreplaced">Not Replaced</a>
+                    <a id="tableNav_notreplaced" class="nav-link" href="index.php?view=notreplaced">Not Replaced</a>
                 </li>
                 <li class="nav-item">
-                    <a id="tableNav_partial" class="nav-link" href="index.html?view=partial">Partial</a>
+                    <a id="tableNav_partial" class="nav-link" href="index.php?view=partial">Partial</a>
                 </li>
                 <li class="nav-item">
-                    <a id="tableNav_replaced" class="nav-link" href="index.html?view=replaced">Replaced</a>
+                    <a id="tableNav_replaced" class="nav-link" href="index.php?view=replaced">Replaced</a>
                 </li>
                 <li class="nav-item">
-                    <a id="tableNav_submitted" class="nav-link" href="index.html?view=submitted">Submitted</a>
+                    <a id="tableNav_submitted" class="nav-link" href="index.php?view=submitted">Submitted</a>
                 </li>
                 <li class="nav-item">
-                    <a id="tableNav_finalized" class="nav-link" href="index.html?view=finalized">Finalized</a>
+                    <a id="tableNav_finalized" class="nav-link" href="index.php?view=finalized">Finalized</a>
                 </li>
                 <li class="nav-item">
-                    <a id="tableNav_all" class="nav-link" href="index.html?view=all">All</a>
+                    <a id="tableNav_all" class="nav-link" href="index.php?view=all">All</a>
                 </li>
             </ul>
         </nav>

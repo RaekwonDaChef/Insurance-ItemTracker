@@ -270,15 +270,15 @@ CREATE TABLE `pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `pages` (`page`, `title`, `pushStateAddr`) VALUES
-('all', 'All Items', 'index.html?view=all'),
-('finalized', 'Finalized', 'index.html?view=finalized'),
-('notreplaced', 'Not Replaced', 'index.html?view=notreplaced'),
-('partial', 'Partial', 'index.html?view=partial'),
-('replaced', 'Replaced', 'index.html?view=replaced'),
-('search', 'Search', 'index.html?view=search'),
-('stats', 'Stats', 'index.html'),
-('submissions', 'Submissions', 'index.html?view=submissions'),
-('submitted', 'Submitted', 'index.html?view=submitted');
+('all', 'All Items', 'index.php?view=all'),
+('finalized', 'Finalized', 'index.php?view=finalized'),
+('notreplaced', 'Not Replaced', 'index.php?view=notreplaced'),
+('partial', 'Partial', 'index.php?view=partial'),
+('replaced', 'Replaced', 'index.php?view=replaced'),
+('search', 'Search', 'index.php?view=search'),
+('stats', 'Stats', 'index.php'),
+('submissions', 'Submissions', 'index.php?view=submissions'),
+('submitted', 'Submitted', 'index.php?view=submitted');
 
 ALTER TABLE `actions`
   ADD PRIMARY KEY (`timestamp`),
