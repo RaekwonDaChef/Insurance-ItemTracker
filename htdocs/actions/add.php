@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // add item id in json format to table 'actions'
     $items = array();
-    array_push($items,$item); }
+    array_push($items,$item);
     $items = json_encode($items);
     $time = time();
     $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '3', '$items')";
