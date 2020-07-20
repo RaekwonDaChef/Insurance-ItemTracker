@@ -272,7 +272,7 @@ $(document).ready(function() {
         $("#addItemsErrorList").empty();
         $("#addItemSave").attr("disabled", true);
         $("#addItemSave")
-            .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"</span>Saving...');
+            .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
         var errorsFound = 0; //alert(errorsFound);
         var addItemNumber = parseInt($("#addInputItem").val());
         $.getJSON('includes/items.json.php', { i: addItemNumber }, function(data) {
@@ -301,14 +301,17 @@ $(document).ready(function() {
                             $("#addItemForm").trigger("reset");
                             reloadSite();
                             if ($.urlParam('view') == "notreplaced") { reloadTable('notreplaced'); }
-                            $("#addItemSave").attr("disabled", false);
-                            $("#addItemSave").html('Save');
                         } else {
+                            $("#addItemFailMsg").html(responseText);
                             $("#addItemFailMsg").show();
                         }
+                        $("#addItemSave").attr("disabled", false);
+                        $("#addItemSave").html('Save');
                     },
                     error: function(xhr) {
                         console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
+                        $("#addItemSave").attr("disabled", false);
+                        $("#addItemSave").html('Save');
                     }
                 });
                 //alert($("#addItemForm").serialize());
