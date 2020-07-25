@@ -67,14 +67,30 @@ if ($result->num_rows > 0) {
     return $items;
 }
 
-if (isset($_GET["type"]) && $_GET["type"] == "stats") { 
+if (isset($_GET["i"])) { $i = $_GET["i"]; }
+$type = $_GET["type"];
+if (isset($i)) { $i = $conn->real_escape_string($i); }
+if ($type == "stats") { 
     $itemData = loadStats();
     echo json_encode($itemData);
+} elseif ($type == "verify") {
+    $sql = "SELECT * FROM contents WHERE item = \"" . $i . "\"";
+    $result = $conn->query($sql); 
+    if ($result->num_rows == 1) { 
+        print(json_encode([
+            'item' => $i,
+            'exists'   => 'true',
+        ], JSON_PRETTY_PRINT));
+    } else {
+        print(json_encode([
+            'item' => $i,
+            'exists'   => 'false',
+        ], JSON_PRETTY_PRINT));
+    }
+    die();
 } else {
-    if (isset($_GET["i"])) { 
-        $i = $_GET["i"];
+    if (isset($i)) { 
         // security measures -----------------------------------------------------------
-        $i = $conn->real_escape_string($i);
         if ((!ctype_digit($i)) || (strlen($i) > 5) || (($i) < 1)) {
             print(json_encode([
                 'success' => false,
@@ -93,7 +109,7 @@ if (isset($_GET["type"]) && $_GET["type"] == "stats") {
 
     // more error checking ---------------------------------------------------------
     if ($result->num_rows < 1) { die("Error: Item not found!"); }
-    if (isset($_GET["i"]) && $result->num_rows > 1) { 
+    if (isset($i) && $result->num_rows > 1) { 
         print(json_encode([
             'success' => false,
             'errno'   => '2',
@@ -104,7 +120,7 @@ if (isset($_GET["type"]) && $_GET["type"] == "stats") {
     }
     // -----------------------------------------------------------------------------
 
-    if (isset($_GET["i"])) { 
+    if (isset($i)) { 
         $row = $result->fetch_assoc();
         echo json_encode($row, JSON_PRETTY_PRINT);
     } else {

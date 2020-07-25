@@ -89,6 +89,16 @@ function validateFormData() {
     if (!Number.isInteger(addItemNumber)) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Item # is not a valid number.</li>');
+    } else {
+        $.ajax({
+            type: 'GET',
+            url: 'includes/items.json.php',
+            success: function() {
+                $("#addItemsErrorList").append('<li class="list-group-item">Item # already exists in database.</li>');
+            },
+            data: { i: addItemNumber, type: "verify" },
+            async: false
+        });
     }
     if ($("#addInputDescription").val().length < 2) {
         errorsFound++; //alert(errorsFound);
@@ -102,24 +112,28 @@ function validateFormData() {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Quantity is not a valid number.</li>');
     } else if (parseInt($("#addInputQty").val()) < 0){
+        errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Quantity must be greater than 0.</li>');
     }
     if (isNaN(parseFloat($("#addInputunit_price").val()))) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Unit price is not a valid number.</li>');
-    } else if (parseInt($("#addInputQty").val()) < 0){
+    } else if (parseInt($("#addInputQty").val()) < 0) {
+        errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Unit price must be greater than 0.</li>');
     }
     if (isNaN(parseFloat($("#addInputRCV").val()))) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Lost value is not a valid number.</li>');
     } else if (parseInt($("#addInputQty").val()) < 0){
+        errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Lost value must be greater than 0.</li>');
     }
     if (isNaN(parseFloat($("#addInputACV").val()))) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Actual cash value is not a valid number.</li>');
     } else if (parseInt($("#addInputQty").val()) < 0){
+        errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Actual cash value must be greater than 0.</li>');
     }
     return errorsFound;
@@ -271,52 +285,42 @@ $(document).ready(function() {
         // validate form data first
         $("#addItemsErrorList").empty();
         $("#addItemSave").attr("disabled", true);
-        $("#addItemSave")
-            .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
-        var errorsFound = 0; //alert(errorsFound);
+        $("#addItemSave").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
         var addItemNumber = parseInt($("#addInputItem").val());
-        $.getJSON('includes/items.json.php', { i: addItemNumber }, function(data) {
-            var validationErrors = validateFormData();
-            if (data.item == parseInt(addItemNumber)) {
-                validationErrors++;
-                $("#addItemsErrorList").append('<li class="list-group-item">Item # already exists in database.</li>');
-                $("#addItemErrors").show();
-                $("#addItemsErrorsCount").html(validationErrors);
-             }
-        }).fail(function() {
-            var validationErrors = validateFormData();
-            if (validationErrors > 0) {
-                $("#addItemErrors").show();
-                $("#addItemsErrorsCount").html(validationErrors);
-            } else {
-                $("#addItemErrors").hide();
-                // ok to save item to database at this point
-                $.ajax({
-                    url: 'actions/add.php',
-                    type: 'POST',
-                    data: $("#addItemForm").serialize(),
-                    success: function(responseText) {
-                        if (responseText == 1) {
-                            $("#addItemSuccessMsg").show();
-                            $("#addItemForm").trigger("reset");
-                            reloadSite();
-                            if ($.urlParam('view') == "notreplaced") { reloadTable('notreplaced'); }
-                        } else {
-                            $("#addItemFailMsg").html(responseText);
-                            $("#addItemFailMsg").show();
-                        }
-                        $("#addItemSave").attr("disabled", false);
-                        $("#addItemSave").html('Save');
-                    },
-                    error: function(xhr) {
-                        console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
-                        $("#addItemSave").attr("disabled", false);
-                        $("#addItemSave").html('Save');
+        validateFormData();
+        var errorsFound = $('#addItemErrors li').length; //alert(errorsFound);
+        if (errorsFound > 0) {
+            $("#addItemErrors").show();
+            $("#addItemsErrorsCount").html(errorsFound);
+            $("#addItemSave").attr("disabled", false);
+            $("#addItemSave").html('Save');
+        } else {
+            $("#addItemErrors").hide();
+            // ok to save item to database at this point
+            $.ajax({
+                url: 'actions/add.php',
+                type: 'POST',
+                data: $("#addItemForm").serialize(),
+                success: function(responseText) {
+                    if (responseText == 1) {
+                        $("#addItemSuccessMsg").show();
+                        $("#addItemForm").trigger("reset");
+                        reloadSite();
+                        if ($.urlParam('view') == "notreplaced") { reloadTable('notreplaced'); }
+                    } else {
+                        $("#addItemFailMsg").html(responseText);
+                        $("#addItemFailMsg").show();
                     }
-                });
-                //alert($("#addItemForm").serialize());
-            }
-        });
+                    $("#addItemSave").attr("disabled", false);
+                    $("#addItemSave").html('Save');
+                },
+                error: function(xhr) {
+                    console.log("AJAX Call Error: " + xhr.status + " " + xhr.statusText);
+                    $("#addItemSave").attr("disabled", false);
+                    $("#addItemSave").html('Save');
+                }
+            });
+        }
     });
     $(document).on("change", ".table_item", function () { // event when item is selected in table (checkbox)
         var itemNumber = $(this).parent().text().trim();
