@@ -26,6 +26,8 @@ require_once("../includes/item.class.php");
 
 $item = new Item();
 
+// all of the parameters are handled within the Item class (POST data)
+
 try {
     echo $item->Add(); // either returns 1 for successful or throws an error (exception)
 } catch (Exception $e) {

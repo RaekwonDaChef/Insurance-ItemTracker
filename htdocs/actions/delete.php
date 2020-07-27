@@ -20,24 +20,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+
 require_once("../includes/mysql.config.php");
+require_once("../includes/item.class.php");
 
-// add json array of item id's that will be affected by this action to table 'actions'
-$jsonData = $_POST["data"];
-$time = time();
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '4', '$jsonData')";
-$result = $conn->query($sql);
+$item = new Item();
 
-$obj = json_decode($jsonData, false);
-$total_affected = 0;
-
-foreach($obj as $value) {
-    $conn->query("DELETE FROM contents WHERE item=$value[0]") or die($conn->error);
-    $total_affected += $conn->affected_rows;
+try {
+    echo $item->Delete(); // either returns 1 for successful or throws an error (exception)
+} catch (Exception $e) {
+    echo "Uh Oh! Something went wrong.. " . $e->getMessage();
 }
-
-echo $total_affected; // return the number or records updated in the table
-
-$conn->close();
 
 ?>
