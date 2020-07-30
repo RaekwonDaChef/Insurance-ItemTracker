@@ -89,16 +89,6 @@ function validateFormData() {
     if (!Number.isInteger(addItemNumber)) {
         errorsFound++; //alert(errorsFound);
         $("#addItemsErrorList").append('<li class="list-group-item">Item # is not a valid number.</li>');
-    } else {
-        $.ajax({
-            type: 'GET',
-            url: 'includes/items.json.php',
-            success: function() {
-                $("#addItemsErrorList").append('<li class="list-group-item">Item # already exists in database.</li>');
-            },
-            data: { i: addItemNumber, type: "verify" },
-            async: false
-        });
     }
     if ($("#addInputDescription").val().length < 2) {
         errorsFound++; //alert(errorsFound);
