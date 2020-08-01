@@ -21,7 +21,7 @@
 */
 
 
-require_once("../includes/mysql.config.php");
+require_once("../../mysql.config.php");
 require_once("../includes/action.class.php");
 
 $action = new Action();

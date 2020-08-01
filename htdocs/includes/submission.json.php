@@ -24,7 +24,7 @@
 
 header('Content-Type: application/json');
 
-require_once("mysql.config.php");
+require_once("../../mysql.config.php");
 
 if (isset($_GET["timestamp"])) {
     $timestamp = $_GET["timestamp"];

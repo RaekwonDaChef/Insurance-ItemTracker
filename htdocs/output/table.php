@@ -20,7 +20,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-require_once("../includes/mysql.config.php");
+require_once("../../mysql.config.php");
 
 $validOrderBy = array('description', 'quantity', 'collect_amount', 'unit_price', 'spend_amount', 'status'); // valid definitions of $_GET['orderby']
 

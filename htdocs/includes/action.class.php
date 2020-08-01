@@ -1,6 +1,6 @@
 <?php
 
-require_once("mysql.config.php");
+require_once("../../mysql.config.php");
 
 trait logger {
     private function SaveAction($actionID, $data) {

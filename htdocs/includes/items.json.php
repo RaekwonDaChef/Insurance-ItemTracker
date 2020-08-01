@@ -23,7 +23,7 @@
 // returns item information in json format, retrieved from sql database
 
 header('Content-Type: application/json');
-require_once("mysql.config.php");
+require_once("../../mysql.config.php");
 
 function loadStats() {
 global $conn, $items;

@@ -20,7 +20,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-require_once("../includes/mysql.config.php");
+require_once("../../mysql.config.php");
 
 if (isset($_GET['pending'])) { // if ?pending is set in URL ($_GET['pending'])...
     /*

@@ -20,7 +20,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-require_once("../includes/mysql.config.php");
+require_once("../../mysql.config.php");
 require_once("../includes/action.class.php");
 
 $action = new Action();
