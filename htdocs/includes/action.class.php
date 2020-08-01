@@ -164,6 +164,7 @@ class Action
             $itemNumber = $value[0];
             $itemNewStatus = $value[1];
             $conn->query("UPDATE contents SET status=$value[1] WHERE item=$value[0]");
+            if ($conn->error) { throw new Exception($conn->error); }
             $total_affected += $conn->affected_rows;
         }
         @$this->SaveAction(5, json_encode($this->json_data));
