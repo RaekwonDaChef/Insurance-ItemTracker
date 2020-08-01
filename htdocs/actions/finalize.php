@@ -20,30 +20,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-//change all status 4 items to status 5
+require_once("../includes/mysql.config.php");
+require_once("../includes/action.class.php");
 
-require_once("../includes/mysql.config.php"); // mysql connection
+$action = new Action();
 
-$timestamp = $_POST["timestamp"];
-
-// add json array of item id's that will be affected by this action to table 'actions'
-$items = array();
-$result = $conn->query("SELECT * FROM actions WHERE timestamp='$timestamp'") or die("submission not found");
-$row = $result->fetch_assoc();
-$items = $row['data'];
-$time = time();
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '2', '$items')";
-$result = $conn->query($sql);
-$items = explode(', ', $row['data']); // seperate comma seperated values into array
-$sqlItems = "";
-foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
-$sqlItems = substr_replace($sqlItems ,"",-3);
-$result = $conn->query("SELECT * FROM contents WHERE $sqlItems LIMIT 1") or die();
-$row = $result->fetch_assoc();
-if ($row['status'] != 4) { die(); }
-$conn->query("UPDATE contents SET status='5' WHERE $sqlItems"); // status 4 = submitted | status 5 = finalized
-echo $conn->affected_rows; // return the number or records updated in the table
-
-$conn->close(); // close connection
+try {
+    echo $action->Finalize(); // either returns 1 for successful or throws an error (exception)
+} catch (Exception $e) {
+    echo "Uh Oh! Something went wrong.. " . $e->getMessage();
+}
 
 ?>

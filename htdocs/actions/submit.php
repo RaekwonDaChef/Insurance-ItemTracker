@@ -20,23 +20,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// change all status 3 items to status 4
-	
-require_once("../includes/mysql.config.php"); // mysql connection
+require_once("../includes/mysql.config.php");
+require_once("../includes/action.class.php");
 
-// add json array of item id's that will be affected by this action to table 'actions'
-$items = array();
-$result = $conn->query("SELECT * FROM contents WHERE status='3'");
-while($row = $result->fetch_assoc()) { array_push($items,$row['item']); }
-$items = implode(", ", $items);
-$time = time();
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '1', '$items')";
-$result = $conn->query($sql);
+$action = new Action();
 
-// change item statuses
-$conn->query("UPDATE contents SET status='4' WHERE status='3'"); // status 3 = replaced | status 4 = submitted
-echo $conn->affected_rows; // return the number or records updated in the table
-
-$conn->close(); // close connection
+try {
+    echo $action->Submit(); // either returns 1 for successful or throws an error (exception)
+} catch (Exception $e) {
+    echo "Uh Oh! Something went wrong.. " . $e->getMessage();
+}
 
 ?>

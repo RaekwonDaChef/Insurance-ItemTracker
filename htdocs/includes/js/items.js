@@ -31,7 +31,7 @@ function submitReceipts() {
                 $("#successMessage").show();
                 hideSelected();
             } else {
-                $("#failMessageText").html("Failed! Changed the status of "+responseText+" items to 'submitted'");
+                $("#failMessageText").html(responseText);
                 $("#failMessage").show();
             }
         },
@@ -64,7 +64,7 @@ function finalizeReceipts(timestamp) {
                 $("#successMessage").show();
                 hideSelected();
             } else {
-                $("#failMessageText").html("Failed! Changed the status of "+responseText+" items to 'finalized'");
+                $("#failMessageText").html(responseText);
                 $("#failMessage").show();
             }
         },
@@ -145,8 +145,8 @@ $(document).ready(function() {
         $("#processReceiptsTitle").html("Finalize Receipts");
         $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {
             $("#processReceiptsText").html("Are you sure you want to change "+data.submitted.total+" items to status 'finalized'?");
+            $("#processReceipts").modal();
         });
-        $("#processReceipts").modal();
     });
     $("#submitReceipts").click(function() {
         $("#processReceiptsTitle").html("Submit Receipts");

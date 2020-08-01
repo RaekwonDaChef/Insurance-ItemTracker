@@ -34,7 +34,7 @@ if (isset($_GET['pending'])) { // if ?pending is set in URL ($_GET['pending'])..
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
         $allSubmissions++;
-        $items = explode(', ', $row['data']); // seperate comma seperated values into array
+        $items = json_decode($row['data']); // seperate comma seperated values into array
         foreach($items as $item) {
             $sql = "SELECT * FROM contents WHERE item = $item";
             $result3 = $conn->query($sql);
@@ -62,11 +62,10 @@ $orderCount = 0;
 while($row = $result->fetch_assoc()) {
     $timestamp = $row['timestamp'];
     $datetime = date("l jS \of F Y h:i:s A", $timestamp);
-    $items = explode(', ', $row['data']); // seperate comma seperated values into array
+    $items = json_decode($row['data']);
     $sqlItems = "";
     foreach($items as $item) { $sqlItems .= "item = " . $item . " OR "; } // build sql query string for selecting all items in submission
     $sqlItems = substr_replace($sqlItems ,"",-3);
-    
     $sql = "SELECT SUM(collect_amount) AS total_value FROM contents WHERE $sqlItems"; // selet the collect amount total of all items in the submission
     $result2 = $conn->query($sql);
     $row2 = $result2->fetch_assoc();

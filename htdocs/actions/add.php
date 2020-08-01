@@ -22,14 +22,14 @@
 
 
 require_once("../includes/mysql.config.php");
-require_once("../includes/item.class.php");
+require_once("../includes/action.class.php");
 
-$item = new Item();
+$action = new Action();
 
 // all of the parameters are handled within the Item class (POST data)
 
 try {
-    echo $item->Add(); // either returns 1 for successful or throws an error (exception)
+    echo $action->Add(); // either returns 1 for successful or throws an error (exception)
 } catch (Exception $e) {
     echo "Uh Oh! Something went wrong.. " . $e->getMessage();
 }

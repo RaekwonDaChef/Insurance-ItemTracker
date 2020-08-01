@@ -21,25 +21,14 @@
 */
 
 require_once("../includes/mysql.config.php");
+require_once("../includes/action.class.php");
 
-// add json array of item id's that will be affected by this action to table 'actions'
-$jsonData = $_POST["data"];
-$time = time();
-$sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '5', '$jsonData')";
-$result = $conn->query($sql);
+$action = new Action();
 
-$obj = json_decode($_POST["data"], false);
-$total_affected = 0;
-
-foreach($obj as $value) {
-    $itemNumber = $value[0];
-    $itemNewStatus = $value[1];
-    $conn->query("UPDATE contents SET status=$value[1] WHERE item=$value[0]") or die($conn->error);
-    $total_affected += $conn->affected_rows;
+try {
+    echo $action->Status(); // either returns 1 for successful or throws an error (exception)
+} catch (Exception $e) {
+    echo "Uh Oh! Something went wrong.. " . $e->getMessage();
 }
-
-echo $total_affected; // return the number or records updated in the table
-
-$conn->close();
 
 ?>

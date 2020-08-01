@@ -53,7 +53,7 @@ if ($result->num_rows < 1) {
 }
 
 $row = $result->fetch_assoc();
-$items = explode(', ', $row['data']); // seperate comma seperated values into array
+$items = json_decode($row['data']);
 $itemCount = 0;
 
 foreach($items as $item) {
@@ -69,7 +69,7 @@ foreach($items as $item) {
 print(json_encode([
     'timestamp' => $row['timestamp'],
     'status'   => $status,
-    'items'   => $row['data'],
+    'items'   => json_decode($row['data']),
     'total'   => $itemCount,
 ], JSON_PRETTY_PRINT));
 
