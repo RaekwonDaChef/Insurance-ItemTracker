@@ -1,19 +1,48 @@
 <?php
 
-require_once("../../mysql.config.php");
+/*
+    Insurance: Item Tracker
+    Copyright (C) 2020 Michael Cabot
+*/
+
+/*
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+require_once("../../mysql.config.php"); // $conn
 
 trait logger {
+    /*
+        function SaveAction($actionID, $data)
+            $actionID   = INTEGER [1-5]
+            $data       = JSON
+    */
     private function SaveAction($actionID, $data) {
         global $conn;
         $time = time();
+        // validate $actionID
         if (!filter_var($actionID, FILTER_VALIDATE_INT, ['options' => ['min_range' => (int)1, 'max_range' => (int)5]])) {
             throw new Exception('Invalid action ID!'); 
         }
+        // validate $data
         if ((json_decode($data) === null) && (json_last_error() !== JSON_ERROR_NONE)) {
             throw new Exception('A JSON error occoured!');
         }
+        // insert row into 'actions' table
         $sql = "INSERT INTO `actions` (`timestamp`, `actionID`, `data`) VALUES ('$time', '$actionID', '$data')";
         $result = $conn->query($sql);
+        // check for sql errors
         if ($conn->error) { throw new Exception($conn->error); }
     }
 }
@@ -22,6 +51,7 @@ class Action
 {
     use logger;
     
+    // Add() function variables:
     private $item;
     private $description;
     private $quantity;
@@ -29,10 +59,14 @@ class Action
     private $collect_amount;
     private $acv_paid;
     private $spend_amount;
+    
+    // Other function variables:
+    private $timestamp;
     private $json_data;
     
     public function __construct()
-    {
+    { // initialization
+        // all data is set and sanitized here directly from the post data
         if (isset($_POST["item"])) { $this->item = filter_var($_POST["item"], FILTER_SANITIZE_NUMBER_INT); }
         if (isset($_POST["description"])) { $this->description = filter_var(trim($_POST["description"]), FILTER_SANITIZE_STRING); }
         if (isset($_POST["quantity"])) { $this->quantity = filter_var($_POST["quantity"], FILTER_SANITIZE_NUMBER_INT); }
@@ -56,7 +90,7 @@ class Action
         if ((filter_var($this->item, FILTER_VALIDATE_INT) === false) || (number_format($this->item) == 0)) { // if invalid integer
             throw new Exception('Invalid item number!');
         }
-        $result = $conn->query("SELECT * FROM `contents` WHERE item = " . $this->item);
+        $result = $conn->query("SELECT * FROM `contents` WHERE item = " . $this->item); // check if item id is already being used
         if ($result->num_rows == 1) { throw new Exception('Item # already exists in database!'); }
         if (strlen($this->description) < 2) { throw new Exception('Description too short!'); }
         if (strlen($this->description) > 32) { throw new Exception('Description too long!'); }
@@ -83,6 +117,8 @@ class Action
             @$this->SaveAction(3, $items);
             return 1;
         } else {
+            // it is assumed that if 1 row is not the affected
+            // amount of rows then an error must have occoured!
             throw new Exception($conn->error);
         }
     }
@@ -91,10 +127,11 @@ class Action
         global $conn;
         $total_affected = 0;
         $sqlItems = "";
+        // $this->json_data = array of item numbers to delete
         foreach($this->json_data[0] as $value) {
-            if (filter_var($value, FILTER_VALIDATE_INT)) {
+            if (filter_var($value, FILTER_VALIDATE_INT)) { // validate integer value
                 array_push($items,$value);
-                $sqlItems .= "item = " . $value . " OR ";
+                $sqlItems .= "item = " . $value . " OR "; // builds a sql query string for deleting all of them in one DELETE command
             } else {
                 throw new Exception("Item # '" . $value . "' failed integer validation!");
             }
@@ -112,13 +149,16 @@ class Action
     
     public function Finalize() {
         global $conn;
+        // $this->timestamp = unix timestamp and id of the submission to finalize
         if (!filter_var($this->timestamp, FILTER_VALIDATE_INT, ['options' => ['min_range' => (int)0, 'max_range' => (int)2147483647]])) {
+            // validate unix timestamp
             throw new Exception('Invalid submission timestamp!'); 
         }
-        $result = $conn->query("SELECT * FROM `actions` WHERE timestamp='$this->timestamp'");
+        $result = $conn->query("SELECT * FROM `actions` WHERE timestamp='$this->timestamp'"); // check if submission exists
         if ($result->num_rows < 1) { throw new Exception('Submission not found!'); }
         $row = $result->fetch_assoc();
         if ((json_decode($row['data']) === null) && (json_last_error() !== JSON_ERROR_NONE)) {
+            // check for json error in the data for the submission stored in sql
             throw new Exception('A JSON error occoured while processing data for the submission!');
         }
         $items = json_decode($row['data']);
@@ -130,6 +170,7 @@ class Action
         $result = $conn->query("SELECT * FROM contents WHERE $sqlItems AND status = 4");
         if ($result->num_rows != sizeof($items)) {
             $missing = sizeof($items) - $result->num_rows;
+            // does not let user go through with finalizing unless all items in the submission are still submitted status
             throw new Exception($missing . ' item(s) in submission group are not status 4 (submitted)!');
         }
         $conn->query("UPDATE contents SET status='5' WHERE $sqlItems"); // status 4 = submitted | status 5 = finalized
@@ -154,6 +195,7 @@ class Action
         global $conn;
         $total_affected = 0;
         $sqlItems = "";
+        // $this->json_data = array of arrays contaning item numbers and their new statuses
         foreach($this->json_data as $value) {
             if ((!filter_var($value[0], FILTER_VALIDATE_INT)) || (number_format($value[0]) == 0)) {
                 throw new Exception("Item number failed integer validation!");
