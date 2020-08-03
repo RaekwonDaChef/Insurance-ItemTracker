@@ -23,12 +23,29 @@
 require_once("../../mysql.config.php");
 require_once("../includes/action.class.php");
 
+define("ERROR_MSG", "Uh Oh! Something went wrong.. ");
+define('ACTIONS', ['submit', 'delete', 'add', 'finalize', 'status']);
+
+$go = filter_var($_GET['go'], FILTER_SANITIZE_STRING);
+
+if (!isset($_GET['go'])) { die(ERROR_MSG . "Action not specified!"); }
+if (!in_array($go, ACTIONS, TRUE)) { die(ERROR_MSG . "Invalid action specified!"); }
+
 $action = new Action();
 
-try {
-    echo $action->Finalize(); // either returns 1 for successful or throws an error (exception)
-} catch (Exception $e) {
-    echo "Uh Oh! Something went wrong.. " . $e->getMessage();
+try
+{
+    switch ($go) {
+        case "submit":      echo $action->Submit();     break;
+        case "delete":      echo $action->Delete();     break;
+        case "add":         echo $action->Add();        break;
+        case "finalize":    echo $action->Finalize();   break;
+        case "status":      echo $action->Status();     break;
+    }
+}
+catch (Exception $e)
+{
+    echo ERROR_MSG . $e->getMessage();
 }
 
 ?>

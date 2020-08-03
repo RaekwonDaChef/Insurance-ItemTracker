@@ -20,7 +20,7 @@
 
 function submitReceipts() {
     $.ajax({
-        url: 'actions/submit.php',
+        url: 'includes/action.php?go=submit',
         type: 'GET',
         success: function(responseText) {
             if (responseText > 0) {
@@ -52,7 +52,7 @@ function finalizeReceiptsConfirm(timestamp) {
 
 function finalizeReceipts(timestamp) {
     $.ajax({
-        url: 'actions/finalize.php',
+        url: 'includes/action.php?go=finalize',
         type: 'POST',
         data: {'timestamp' : timestamp},
         success: function(responseText) {
@@ -236,7 +236,7 @@ $(document).ready(function() {
         });
         itemDeleteData = JSON.stringify(itemDeleteData);
         $.ajax({
-            url: 'actions/delete.php',
+            url: 'includes/action.php?go=delete',
             type: 'POST',
             data: {data: itemDeleteData},
             success: function(responseText) {
@@ -288,7 +288,7 @@ $(document).ready(function() {
             $("#addItemErrors").hide();
             // ok to save item to database at this point
             $.ajax({
-                url: 'actions/add.php',
+                url: 'includes/action.php?go=add',
                 type: 'POST',
                 data: $("#addItemForm").serialize(),
                 success: function(responseText) {
@@ -397,7 +397,7 @@ $(document).ready(function() {
         });
         itemStatusChangeData = JSON.stringify(itemStatusChangeData);
         $.ajax({
-            url: 'actions/status.php',
+            url: 'includes/action.php?go=status',
             type: 'POST',
             data: {data: itemStatusChangeData},
             success: function(responseText) {
