@@ -67,6 +67,7 @@ if ($result->num_rows > 0) {
     return $items;
 }
 
+$type = "";
 if (isset($_GET["i"])) { $i = $_GET["i"]; }
 if (isset($_GET["type"])) { $type = $_GET["type"]; }
 if (isset($i)) { $i = $conn->real_escape_string($i); }
