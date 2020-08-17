@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
 }
 
 if (isset($_GET["i"])) { $i = $_GET["i"]; }
-$type = $_GET["type"];
+if (isset($_GET["type"])) { $type = $_GET["type"]; }
 if (isset($i)) { $i = $conn->real_escape_string($i); }
 if ($type == "stats") { 
     $itemData = loadStats();
