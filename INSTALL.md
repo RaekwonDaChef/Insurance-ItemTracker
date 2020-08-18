@@ -1,7 +1,7 @@
 # Insurance-ItemTracker
 ## Installation & Setup
 
-> **Author:** Michael Cabot (`contact@michaelcabot.dev`)
+> **Author:** Michael Cabot (`cabotmichael@gmail.com`)
 > **License:** GPL v3.0 `See LICENSE.md.`
 
 ###  1. Compile SCSS (/scss/main.scss to /htdocs/style/main.css)
@@ -19,10 +19,12 @@
 
 > If you would like to setup a demo database containing 150+ example items, then import `'/sql/database_example.sql'` instead of `'/sql/database.sql'`.
 
-###  3. Edit `'/htdocs/includes/mysql.config.example.php'`
+###  3. Edit `'mysql.config.example.php'`
 
  1. Rename `'mysql.config.example.php'` to `'mysql.config.php'`
  2. Edit `'mysql.config.php'` and add mysql server, login & database information.
+ 
+> **Note:** mysql.config.php is expected to be one folder level above index.php, outside of htdocs.
 
 ###  4. Copy `'/htdocs/'` Contents to Web Server
 
