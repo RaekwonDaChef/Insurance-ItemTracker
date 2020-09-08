@@ -81,6 +81,8 @@ function hideSelected() {
     var height = $(window).height() - 55;
     $("#pageContainer").height(height);
     $(":checkbox").prop("checked", false);
+    $(".selected").removeClass("selected");
+    $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
 }
 
 function validateFormData() {
@@ -140,13 +142,6 @@ $(document).ready(function() {
                 $("#submissionCount").hide();
             }
         }
-    });
-    $("#finalizeReceipts").click(function() {
-        $("#processReceiptsTitle").html("Finalize Receipts");
-        $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {
-            $("#processReceiptsText").html("Are you sure you want to change "+data.submitted.total+" items to status 'finalized'?");
-            $("#processReceipts").modal();
-        });
     });
     $("#submitReceipts").click(function() {
         $("#processReceiptsTitle").html("Submit Receipts");
