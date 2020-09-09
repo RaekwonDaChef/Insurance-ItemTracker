@@ -151,8 +151,8 @@
                         Order: Asc. (Low to High)
                     </button>
                     <div class="dropdown-menu" aria-labelledby="sortOrderMenuButton">
-                        <a onclick="ReSortTable('', 'asc')" class="dropdown-item" href="#">Asc. (Low to High)</a>
-                        <a onclick="ReSortTable('', 'desc')" class="dropdown-item" href="#">Desc. (High To Low)</a>
+                        <a onclick="reSortTable('', 'asc')" class="dropdown-item" href="#">Asc. (Low to High)</a>
+                        <a onclick="reSortTable('', 'desc')" class="dropdown-item" href="#">Desc. (High To Low)</a>
                     </div>
                 </div>
             </div>
@@ -162,13 +162,13 @@
                         Sort By: Description
                     </button>
                     <div class="dropdown-menu" aria-labelledby="sortOrderByMenuButton">
-                        <a onclick="ReSortTable('item', '')" class="dropdown-item" href="#">Item #</a>
-                        <a onclick="ReSortTable('description', '')" class="dropdown-item" href="#">Description</a>
-                        <a onclick="ReSortTable('quantity', '')" class="dropdown-item" href="#">Quantity</a>
-                        <a onclick="ReSortTable('unit_price', '')" class="dropdown-item" href="#">Price</a>
-                        <a onclick="ReSortTable('collect_amount', '')" class="dropdown-item" href="#">$$</a>
-                        <a onclick="ReSortTable('spend_amount', '')" class="dropdown-item" href="#">Spend</a>
-                        <a onclick="ReSortTable('status', '')" class="dropdown-item" href="#">Status</a>
+                        <a onclick="reSortTable('item', '')" class="dropdown-item" href="#">Item #</a>
+                        <a onclick="reSortTable('description', '')" class="dropdown-item" href="#">Description</a>
+                        <a onclick="reSortTable('quantity', '')" class="dropdown-item" href="#">Quantity</a>
+                        <a onclick="reSortTable('unit_price', '')" class="dropdown-item" href="#">Price</a>
+                        <a onclick="reSortTable('collect_amount', '')" class="dropdown-item" href="#">$$</a>
+                        <a onclick="reSortTable('spend_amount', '')" class="dropdown-item" href="#">Spend</a>
+                        <a onclick="reSortTable('status', '')" class="dropdown-item" href="#">Status</a>
                     </div>
                 </div>
             </div>
