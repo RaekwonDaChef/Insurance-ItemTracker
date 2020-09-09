@@ -100,7 +100,7 @@ function loadSiteData(data) {
 }
 
 function showSearchResults(str) {
-    localStorage.searchQuery = str; // used for reloadTable and ReSortTable
+    localStorage.searchQuery = str; // used for reloadTable and reSortTable
     if ($.urlParam('view') != "search") {
         // if the page has not gone to ?view=search, then a search has begun and we need to
         // save the current page so we can navigate back to it when search is over
@@ -140,25 +140,6 @@ function showSearchResults(str) {
     navigateTo("link_search"); // navigate to link page
 }
 
-function reloadSite() { // called when items are submitted/finalized, and for item status changes
-    $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {
-        // get site stats data through JSON, data object is injected
-        // into site elements and charts are created
-        switch ($.urlParam('view')) { // reload table if user is viewing one
-            case "all": reloadTable('all'); break;
-            case "partial": reloadTable('partial'); break;
-            case "finalized": reloadTable('finalized'); break;
-            case "notreplaced": reloadTable('notreplaced'); break;
-            case "replaced": reloadTable('replaced'); break;
-            case "submitted": reloadTable('submitted'); break;
-        }
-        loadSiteData(data); // function that adds the item totals for each status into nav bar links text
-        barChart.destroy();
-        pieChart.destroy();
-        loadCharts(); // destroy and recreate charts
-    });
-}
-
 $(document).ready(function() {
     var height = $(window).height() - 50;
     $("#pageContainer").height(height);
@@ -169,25 +150,6 @@ $(document).ready(function() {
         if (checkedTotal < 1) { heightOffset = 50; } else { heightOffset = 95; }
         height = $(window).height() - heightOffset;
         $("#pageContainer").height(height);
-    });
-    
-    $.getJSON('includes/items.json.php', { type: "stats" }, function(data) {
-        switch ($.urlParam('view')) { // ensure that all links can be accessed via direct url link
-            case "all": navigateTo('link_all'); break;
-            case "partial": if (data.partial.total > 0) { navigateTo('link_partial'); } else { navigateTo('link_all'); alert('No partial items!'); } break;
-            case "finalized": if (data.finalized.total > 0) { navigateTo('link_finalized'); } else { navigateTo('link_all'); alert('No finalized items!'); } break;
-            case "notreplaced": if (data.notreplaced.total > 0) { navigateTo('link_notreplaced'); } else { navigateTo('link_all'); alert('No not replaced items!'); } break;
-            case "replaced": if (data.replaced.total > 0) { navigateTo('link_replaced'); } else { navigateTo('link_all'); alert('No replaced items!'); } break;
-            case "submitted": if (data.submitted.total > 0) { navigateTo('link_submitted'); } else { navigateTo('link_all'); alert('No submitted items!'); } break;
-            case "submissions": navigateTo('link_submissions'); break;
-            case "search": navigateTo('link_search'); break;
-            default: 
-                $("header").slideDown(); // only show header when not on a table view page
-                $("#tableNav").hide();
-                $("#sortOrderMenuButton").hide();
-                $("#sortOrderByMenuButton").hide();
-        }
-        loadSiteData(data);
     });
     
     $('#searchBox').bind('keypress keydown keyup', function(event) {
@@ -213,43 +175,5 @@ $(document).ready(function() {
         case "status": $("#sortOrderByMenuButton").html("Sort By: Status"); break;
     }
     
-    $("nav .nav-link").on("click", function(event) {
-        if (event.target.id != "navbarDropdown") {
-            $(".nav").find(".active").removeClass("active");
-            $(this).addClass("active");
-        }
-    });
-    
-    $("#link_logo, #link_stats").click(function(event) {
-        event.preventDefault(); navigateTo('link_stats');
-    });
-    $("#link_all, #tableNav_all").click(function(event) {
-        event.preventDefault(); navigateTo('link_all');
-    });
-    $("#link_notreplaced, #tableNav_notreplaced").click(function(event) {
-        event.preventDefault(); navigateTo('link_notreplaced');
-    });
-    $("#link_partial, #tableNav_partial").click(function(event) {
-        event.preventDefault(); navigateTo('link_partial');
-    });
-    $("#link_replaced, #tableNav_replaced").click(function(event) {
-        event.preventDefault(); navigateTo('link_replaced')
-    });
-    $("#link_submitted, #tableNav_submitted").click(function(event) {
-        event.preventDefault(); navigateTo('link_submitted');
-    });
-    $("#link_finalized, #tableNav_finalized").click(function(event) {
-        event.preventDefault(); navigateTo('link_finalized');
-    });
-    $("#link_submissions").click(function(event) {
-        event.preventDefault(); navigateTo('link_submissions');
-    });
-    
     $('[data-toggle="tooltip"]').tooltip(); // enable tooltips
-    
-    $('a') // force all external site links to open in a new tab/window
-        .filter('[href^="http"], [href^="//"]')
-         .not('[href*="' + window.location.host + '"]')
-        .attr('rel', 'noopener noreferrer')
-        .attr('target', '_blank');
 });
