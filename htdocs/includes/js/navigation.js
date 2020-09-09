@@ -142,6 +142,7 @@ function navigateTo(linkElement, doPushState = true) {
             $("#statusChangePartial, #statusChangeReplaced").show();
             // ------------------------------------------------------------------
             if (doPushState === true) { history.pushState(null, null, "index.php?view=notreplaced"); } // change address bar url address
+            setPageTitle('Not Replaced');
         break;
         case "partial":
             // -- item status change dropdown for footer bar --------------------
@@ -149,6 +150,7 @@ function navigateTo(linkElement, doPushState = true) {
             $("#statusChangeNotReplaced, #statusChangeReplaced").show();
             // ------------------------------------------------------------------
             if (doPushState === true) { history.pushState(null, null, "index.php?view=partial"); } // change address bar url address
+            setPageTitle('Partial');
         break;
         case "replaced":
             $("#submitReceipts").show();  // show button: "Submit Receipts"
@@ -157,19 +159,24 @@ function navigateTo(linkElement, doPushState = true) {
             $("#statusChangeNotReplaced, #statusChangePartial").show();
             // ------------------------------------------------------------------
             if (doPushState === true) { history.pushState(null, null, "index.php?view=replaced"); } // change address bar url address
+            setPageTitle('Replaced');
         break;
         case "submitted":
             if (doPushState === true) { history.pushState(null, null, "index.php?view=submitted"); } // change address bar url address
+            setPageTitle('Submitted');
         break;
         case "finalized":
             if (doPushState === true) { history.pushState(null, null, "index.php?view=finalized"); } // change address bar url address
+            setPageTitle('Finalized');
         break;
         case "all":
             if (doPushState === true) { history.pushState(null, null, "index.php?view=all"); } // change address bar url address
+            setPageTitle('All Items');
         break;
         case "submissions":
             $("#link_submissions_li").addClass("active");
             if (doPushState === true) { history.pushState(null, null, "index.php?view=submissions"); } // change address bar url address
+            setPageTitle('Submissions');
         break;
         default: // stats
             $("#link_stats_li").addClass("active");
@@ -179,6 +186,7 @@ function navigateTo(linkElement, doPushState = true) {
             pieChart.destroy();
             loadCharts();
             if (doPushState === true) { history.pushState(null, null, "index.php"); } // change address bar url address
+            setPageTitle('Stats');
     }
     
     if (pageName !== 'stats') { // if it is not the stats page...
@@ -218,6 +226,10 @@ function navigateTo(linkElement, doPushState = true) {
     // which is only applied when the page is navigated to / shown
     $(".show-content").hide().removeClass("show-content");
     $("[id^='"+containerElement+"']").show().addClass("show-content"); // show the right container
+}
+
+function setPageTitle(newtitle) {
+    document.title = "Item Tracker (" + newtitle + ")";
 }
 
 function reloadSite() { // called when items are submitted/finalized, and for item status changes
