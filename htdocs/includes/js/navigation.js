@@ -18,8 +18,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+// Single-Page-App (SPA) structure
+
+// 'popstate' event is fired when user navigates site using back/forward buttons
 $(window).bind('popstate',  
     function(event) {
+        // this function gets the new page from the url parameter 'view'
+        // and loads it, giving the browsers back and forward buttons functionality
         switch ($.urlParam('view')) {
             case "all": navigateTo('link_all', false); break;
             case "partial": navigateTo('link_partial', false); break;
@@ -40,77 +45,87 @@ function navigateTo(linkElement, doPushState = true) {
     var containerElement = 'container_'+pageName;
     var tableElement = 'table_'+pageName;
     var tableNavElement = '#tableNav_'+pageName;
-    var tableTitle;
-    var tableItemCount;
     
-    // search box should be empty, if user is navigating between pages
-    if (linkElement != "link_search") { $('#searchBox').val(''); $("#searchCaption").hide(); }
-    // if a success message is shown, it should be hidden/cleared, if user is navigating between pages
-    $("#successMessage").hide();
+    if (linkElement != "link_search") { $('#searchBox').val(''); $("#searchCaption").hide(); } // search box should be empty
+    $("#successMessage").hide(); // if a success message is shown, it should be hidden/cleared
     $("nav").find(".active").removeClass("active"); // remove active class from any nav element
+    hideSelected(); // hide the selected item(s) footer bar
+    if (pageName !== 'replaced') { $("#submitReceipts").hide(); } // hide 'Submit Receipts' button if not on Replaced page
+    if (pageName !== 'notreplaced' && pageName !== 'partial' && pageName !== 'replaced') {
+        $("#statusDropdown").hide(); // the status change dropdown should only appear on 3 pages (Not Replaced, Partial & Replaced)
+    }
     
-    $.getJSON('includes/pages.json.php', { page: pageName }, function(data) { // get page info (json)
-        tableTitle = data.title; // store page title in a variable for use outside of this scope
-        document.title = "Item Tracker (" + data.title + ")"; // set page title
-        if (doPushState === true) { history.pushState(null, null, data.pushStateAddr); } // change address bar url address
-    });
+    // #link_submissions_li = "Submissions" link @ top nav bar
+    // #link_items_li = "View Items" dropdown link @ top nav bar
+    // #link_stats_li = "Home" link @ top nav bar
     
-    hideSelected();
-
-    $(".selected").removeClass("selected");
-    $("#statusChangeNotReplaced, #statusChangePartial, #statusChangeReplaced").hide();
-    $("#submitReceipts, #finalizeReceipts").hide(); // hide both buttons (Finalize & Submit)
-    $("#tableNav").hide();
-    $("#sortOrderMenuButton").hide(); // dropdown menu - asc or desc
-    $("#sortOrderByMenuButton").hide(); // dropdown menu - column sort by seletion
-    
-    $("#link_items_li").addClass("active"); // it is assumed the page will be an item page first because that is most likely case
+    if (pageName == 'notreplaced' ||
+        pageName == 'partial' ||
+        pageName == 'replaced' ||
+        pageName == 'submitted' ||
+        pageName == 'finalized' ||
+        pageName == 'all') { // if item page
+        $("#link_items_li").addClass("active");
+        $(tableNavElement).addClass("active"); // table nav bar, set current link as active
+        $("#tableNav").show(); // table navigation bar that appears below main top nav bar
+        $("#sortOrderMenuButton").show(); // dropdown menu - asc or desc
+        $("#sortOrderByMenuButton").show(); // dropdown menu - column sort by seletion
+    } else { // not an item page, must be submissions page or stats
+        $("#tableNav").hide(); // table navigation bar that appears below main top nav bar
+        $("#sortOrderMenuButton").hide(); // dropdown menu - asc or desc
+        $("#sortOrderByMenuButton").hide(); // dropdown menu - column sort by selection
+    }
     
     switch (pageName) {
-        case "submissions":
-            $("#link_submissions_li").addClass("active");
-            $("#link_stats_li, #link_items_li").removeClass("active");
-        break;
         case "notreplaced":
+            // -- item status change dropdown for footer bar --------------------
             $("#statusDropdown").show().html("Status: Not Replaced");
             $("#statusChangePartial, #statusChangeReplaced").show();
+            // ------------------------------------------------------------------
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=notreplaced"); } // change address bar url address
         break;
         case "partial":
+            // -- item status change dropdown for footer bar --------------------
             $("#statusDropdown").show().html("Status: Partial");
             $("#statusChangeNotReplaced, #statusChangeReplaced").show();
+            // ------------------------------------------------------------------
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=partial"); } // change address bar url address
         break;
         case "replaced":
             $("#submitReceipts").show();  // show button: "Submit Receipts"
+            // -- item status change dropdown for footer bar --------------------
             $("#statusDropdown").show().html("Status: Replaced");
             $("#statusChangeNotReplaced, #statusChangePartial").show();
+            // ------------------------------------------------------------------
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=replaced"); } // change address bar url address
         break;
         case "submitted":
-            //$("#finalizeReceipts").show(); // show button: "Finalize Receipts"
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=submitted"); } // change address bar url address
         break;
-        case "stats":
+        case "finalized":
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=finalized"); } // change address bar url address
+        break;
+        case "all":
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=all"); } // change address bar url address
+        break;
+        case "submissions":
+            $("#link_submissions_li").addClass("active");
+            if (doPushState === true) { history.pushState(null, null, "index.php?view=submissions"); } // change address bar url address
+        break;
+        default: // stats
             $("#link_stats_li").addClass("active");
-            $("#link_submissions_li, #link_items_li").removeClass("active");
-            //$("#finalizeReceipts").show(); // show button: "Finalize Receipts"
-        break;
-        default:
-            $("#statusDropdown").hide();
+            $("header").slideDown();
+            $("#navTextTitle").hide();
+            barChart.destroy();
+            pieChart.destroy();
+            loadCharts();
+            if (doPushState === true) { history.pushState(null, null, "index.php"); } // change address bar url address
     }
     
-    
-    if (pageName !== 'stats') { // if it is not the stats page, then it is a table page...
+    if (pageName !== 'stats') { // if it is not the stats page...
         $("header").slideUp(); // hide the header / jumbotron on table pages
-        $(tableNavElement).addClass("active"); // table nav bar, set current link as active
-        if (pageName !== 'submissions') {
-            $("#tableNav").show();
-            $("#sortOrderMenuButton").show(); // dropdown menu - asc or desc
-            $("#sortOrderByMenuButton").show(); // dropdown menu - column sort by seletion
-        }
-        $("#navTextTitle").show(); /* "Item Tracker" text on top navbar which only appears on
-                                                                pages that do not have header / jumbotron */
-        
-        //alert($("[id^='"+containerElement+"']").html());
-        
-        if ($("[id^='"+containerElement+"']").is(':empty')) { // if that table has not been loaded yet...
+        $("#navTextTitle").show(); // "Item Tracker" text on top navbar
+        if ($("[id^='"+containerElement+"']").is(':empty')) { // if that page has not been loaded yet...
             if (pageName == 'submissions') {
                 // show loading image temporarily while the table loads:
                 $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
@@ -125,7 +140,6 @@ function navigateTo(linkElement, doPushState = true) {
                     }
                 });
             } else if (pageName !== 'search') {
-                
                 // show loading image temporarily while the table loads:
                 $("[id^='"+containerElement+"']").html("<img class=loading src=output/images/tables/loading.gif>"); 
                 $.ajax({
@@ -140,17 +154,6 @@ function navigateTo(linkElement, doPushState = true) {
                 });
             }
         }
-    } else {
-        $("header").slideDown();
-        $("#navTextTitle").hide();
-        $("#tableNav").hide();
-        $("#sortOrderMenuButton, #sortOrderByMenuButton").hide();
-        $("#link_items_li").removeClass("active");
-        $("#link_stats_li").addClass("active");
-        $("#submitReceipts, #finalizeReceipts").hide();
-        barChart.destroy();
-        pieChart.destroy();
-        loadCharts();
     }
     // hide and remove the current container, indentified by its css class
     // which is only applied when the page is navigated to / shown
@@ -182,8 +185,6 @@ function reloadTable(table) {
 function ReSortTable(orderBy, order) {
     var table = $.urlParam('view');
 	var containerElementName = 'container_'+table;
-    var tableTitle;
-    var tableItemCount;
     switch (order) {
         case "asc":
             $("#sortOrderMenuButton").html("Asc. (Low to High)");
